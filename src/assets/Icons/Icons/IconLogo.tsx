@@ -4,7 +4,12 @@ function IconLogo(props: Readonly<IconProps>): JSX.Element {
   return (
     <Icon {...props} width={props.width || '857'} height={props.height || '151'}>
       {' '}
-      <svg viewBox="0 0 857.61 151" fill={props.fill || 'white'} className="deskthing-text-logo">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 857.61 151"
+        fill={props.fill || 'white'}
+        className="deskthing-text-logo"
+      >
         {' '}
         <style>
           {`
