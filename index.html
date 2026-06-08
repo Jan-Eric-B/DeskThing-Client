@@ -11,14 +11,16 @@
     <link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png">
     <link rel="apple-touch-icon" sizes="512x512" href="/icon-512x512.png">
 
+    <!-- Zoom is intentionally disabled: fixed-resolution kiosk UI on embedded Superbird hardware (Web:S7926). -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>DeskThing Client</title>
-    <script>Object.defineProperty(window, "_vite_is_modern_browser", { value: false, writable: false })</script>
+    <!-- Must use `window`, not globalThis: inline scripts are not transpiled/polyfilled by plugin-legacy and globalThis is unsupported on Chrome 69. -->
+    <script>Object.defineProperty(window, "_vite_is_modern_browser", { value: false, writable: false }) // NOSONAR</script>
   </head>
   <body style="background: black;">
     <div id="root">
       <div style="width: 100%; height: 100%; max-height: 98vh; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-        <img id="appstart-img" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" src="/images/appstart.png" alt="App Start Image" />
+        <img id="appstart-img" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" src="/images/appstart.png" alt="App Start" />
       </div>
     </div> 
     <script src="/manifest-loader.js"></script>

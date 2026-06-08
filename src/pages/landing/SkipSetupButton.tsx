@@ -16,10 +16,10 @@ interface SkipSetupButtonProps {
  */
 const SkipSetupButton: React.FC<SkipSetupButtonProps> = ({ text = 'Skip Setup' }) => {
   const setPreferences = useSettingsStore((state) => state.updatePreferences)
-  const [skipping, setIsSkipping] = useState(false)
+  const [skipping, setSkipping] = useState(false)
 
   const onClick = () => {
-    setIsSkipping(true)
+    setSkipping(true)
     setPreferences({
       onboarding: false
     })
@@ -34,7 +34,7 @@ const SkipSetupButton: React.FC<SkipSetupButtonProps> = ({ text = 'Skip Setup' }
           prefIndex: 0
         }
       })
-      setIsSkipping(false)
+      setSkipping(false)
     }, 500)
   }
 

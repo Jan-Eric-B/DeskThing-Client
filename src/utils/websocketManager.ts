@@ -25,7 +25,7 @@ export class WebSocketManager {
   private missedPongs = 0
   private readonly MAX_MISSED_PONGS = 3
   private clientId: string | null = null
-  private code = Math.random() * 1000000
+  private readonly code = Math.random() * 1000000
 
   private closeTimeoutId: ReturnType<typeof setTimeout> | null = null
   private reconnectId: ReturnType<typeof setTimeout> | null = null
@@ -54,7 +54,7 @@ export class WebSocketManager {
 
       // Close connection if open
       if (this.socket.readyState === WebSocket.OPEN) {
-        await this.socket.close(4000, 'Closing existing connection')
+        this.socket.close(4000, 'Closing existing connection')
       }
 
       // Clear heartbeat timers
@@ -95,7 +95,7 @@ export class WebSocketManager {
         }
       }, 10000)
 
-      this.socket!.onopen = () => {
+      this.socket.onopen = () => {
         clearTimeout(timeout)
         console.info(`[${id}] Connected to ${this.url}`)
         this.reconnecting = false
@@ -104,10 +104,10 @@ export class WebSocketManager {
         resolve()
       }
 
-      this.socket!.onerror = (error) => {
+      this.socket.onerror = (error) => {
         clearTimeout(timeout)
         console.error(`[${id}] WebSocket error:`, error)
-        reject(error)
+        reject(new Error(`[${id}] WebSocket connection error`))
       }
     })
 
@@ -245,7 +245,7 @@ export class WebSocketManager {
 
     // Send "ping" every 30 seconds
     this.heartbeatInterval = setInterval(() => {
-      if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      if (this.socket?.readyState === WebSocket.OPEN) {
         this.sendMessage({ app: 'server', type: DEVICE_DESKTHING.PING })
         this.startPongTimeout()
       }

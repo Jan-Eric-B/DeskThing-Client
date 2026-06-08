@@ -17,12 +17,12 @@ const Wheel: React.FC = () => {
   const [buttons, setButtons] = useState<Action[]>([])
   const getButtonAction = useMappingStore((store) => store.getButtonAction)
   const executeAction = useMappingStore((store) => store.executeAction)
-  const [opened, setIsOpened] = useState<boolean>(false)
+  const [opened, setOpened] = useState<boolean>(false)
   const setWheelState = useActionStore((store) => store.setWheelState)
   const wheelRotation = useActionStore((store) => store.wheelRotation)
 
   const handleClose = async () => {
-    setIsOpened(false)
+    setOpened(false)
     setTimeout(() => {
       setWheelState(false)
     }, 200)
@@ -34,10 +34,12 @@ const Wheel: React.FC = () => {
       e.preventDefault()
       e.stopImmediatePropagation()
       if (e.key === 'Enter') {
-        setIsOpened(false)
-        const action = getButtonAction(selectedAction as string, EventMode.KeyDown)
-        if (action) {
-          executeAction(action)
+        setOpened(false)
+        if (selectedAction) {
+          const action = getButtonAction(selectedAction, EventMode.KeyDown)
+          if (action) {
+            executeAction(action)
+          }
         }
         handleClose()
       }
@@ -45,7 +47,7 @@ const Wheel: React.FC = () => {
 
     globalThis.addEventListener('keydown', handleEnter)
 
-    setIsOpened(true)
+    setOpened(true)
 
     return () => {
       globalThis.removeEventListener('keydown', handleEnter)
@@ -78,7 +80,7 @@ const Wheel: React.FC = () => {
         {buttons.length > 0 &&
           [buttons[0], buttons[1], buttons[2], buttons[3]].map((action, index) => (
             <div
-              key={index}
+              key={actionKeys[index]}
               className={`w-full h-full duration-300 flex lg:-rotate-90 items-center justify-center transition-all`}
             >
               <div

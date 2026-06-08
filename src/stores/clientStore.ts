@@ -63,14 +63,7 @@ const defaultConfig: ClientConfigurations = {
         server: '',
         client: ''
       },
-      template: '',
-      version_code: 0,
-      compatible_server: [],
-      compatible_client: [],
-      isAudioSource: false,
-      isScreenSaver: false,
-      isLocalApp: false,
-      isWebApp: false
+      template: ''
     }
   },
   ScreensaverType: undefined,

@@ -1,12 +1,6 @@
 import { create } from 'zustand'
-import {
-  AppSettings,
-  App,
-  SocketData,
-  DeviceToDeskthingData,
-  DEVICE_DESKTHING
-} from '@deskthing/types'
-import { SocketConfig, SocketSettings } from '@src/types'
+import { AppSettings, App, DeviceToDeskthingData, DEVICE_DESKTHING } from '@deskthing/types'
+import { SocketConfig, SocketSettings, SocketData } from '@src/types'
 import { useSettingsStore } from './settingsStore'
 import useWebSocketStore from './websocketStore'
 
@@ -46,7 +40,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       return { appSettings: updatedAppSettings }
     })
   },
-  saveSettings: async (appName: string) => {
+  saveSettings: (appName: string) => {
     const send = useWebSocketStore.getState().send
     const settings = get().appSettings[appName]
 

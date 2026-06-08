@@ -33,6 +33,13 @@ const DashboardPage = () => {
   const logs = useSettingsStore((state) => state.logs)
   const currentTime = useTimeStore((state) => state.currentTimeFormatted)
 
+  let connectionLabel = 'Disconnected'
+  if (isConnected) {
+    connectionLabel = 'Connected'
+  } else if (isReconnecting) {
+    connectionLabel = 'Reconnecting...'
+  }
+
   const handleRestartOnboarding = () => {
     updatePreferences({
       onboarding: false,
@@ -71,9 +78,7 @@ const DashboardPage = () => {
             <div
               className={`w-3 h-3 rounded-full mr-2 ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'} shadow-lg`}
             ></div>
-            <span className="text-gray-200 text-sm">
-              {isConnected ? 'Connected' : isReconnecting ? 'Reconnecting...' : 'Disconnected'}
-            </span>
+            <span className="text-gray-200 text-sm">{connectionLabel}</span>
           </div>
           <div className="text-gray-400 text-sm bg-zinc-800/50 p-2 rounded-lg">
             {manifest.context.ip}:{manifest.context.port}

@@ -14,7 +14,6 @@ import {
   DEVICE_CLIENT,
   DEVICE_DESKTHING,
   DeviceToClientCore,
-  DeviceToClientData,
   EventMode
 } from '@deskthing/types'
 import { useRef, useEffect } from 'react'
@@ -158,10 +157,10 @@ const WebPage: React.FC<WebPageProps> = ({ currentView }: WebPageProps): JSX.Ele
     manifest: handleManifest
   }
 
-  const send = (data: DeviceToClientData) => {
-    if (iframeRef.current && iframeRef.current.contentWindow) {
+  const send = (data: DeviceToClientCore) => {
+    if (iframeRef.current?.contentWindow) {
       const augmentedData = { ...data, source: 'deskthing' }
-      iframeRef.current.contentWindow.postMessage(augmentedData, '*')
+      iframeRef.current.contentWindow.postMessage(augmentedData, `http://${ip}:${port}`)
     }
   }
 
@@ -169,7 +168,7 @@ const WebPage: React.FC<WebPageProps> = ({ currentView }: WebPageProps): JSX.Ele
     const removeListener = addWebsocketListener((data) => {
       if (data.app != currentView) return
 
-      send(data as unknown as DeviceToClientData)
+      send(data as unknown as DeviceToClientCore)
     })
 
     return () => {
@@ -190,7 +189,7 @@ const WebPage: React.FC<WebPageProps> = ({ currentView }: WebPageProps): JSX.Ele
   }, [apps])
 
   useEffect(() => {
-    if (appSettings && appSettings[currentView]) {
+    if (appSettings?.[currentView]) {
       send({
         type: DEVICE_CLIENT.SETTINGS,
         app: 'client',
@@ -208,7 +207,7 @@ const WebPage: React.FC<WebPageProps> = ({ currentView }: WebPageProps): JSX.Ele
   useEffect(() => {
     const sendDefaultData = async () => {
       send({ type: DEVICE_CLIENT.MUSIC, app: 'client', payload: music })
-      if (appSettings && appSettings[currentView]) {
+      if (appSettings?.[currentView]) {
         send({
           type: DEVICE_CLIENT.SETTINGS,
           app: 'client',

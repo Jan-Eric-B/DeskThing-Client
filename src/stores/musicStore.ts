@@ -70,15 +70,15 @@ export const useMusicStore = create<MusicState>((set, get) => ({
     const updateIcons = async () => {
       const updateIcon = useMappingStore.getState().updateIcon
       newData?.is_playing !== undefined && updateIcon('play', newData?.is_playing ? 'pause' : '')
-      newData?.repeat_state !== undefined &&
-        updateIcon(
-          'repeat',
-          newData?.repeat_state == 'context'
-            ? 'repeatActive'
-            : newData?.repeat_state == 'off'
-              ? 'repeatDisabled'
-              : ''
-        )
+      if (newData?.repeat_state !== undefined) {
+        let repeatIcon = ''
+        if (newData.repeat_state == 'context') {
+          repeatIcon = 'repeatActive'
+        } else if (newData.repeat_state == 'off') {
+          repeatIcon = 'repeatDisabled'
+        }
+        updateIcon('repeat', repeatIcon)
+      }
       newData?.shuffle_state !== undefined &&
         updateIcon('shuffle', newData?.shuffle_state ? '' : 'shuffleDisabled')
     }

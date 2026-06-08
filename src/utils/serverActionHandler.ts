@@ -46,7 +46,7 @@ export class ActionHandler {
     return ActionHandler.instance
   }
 
-  private sendMessage = async (data: DeviceToDeskthingData) => {
+  private readonly sendMessage = async (data: DeviceToDeskthingData) => {
     const send = useWebSocketStore.getState().send
     await send(data)
   }
@@ -119,7 +119,7 @@ export class ActionHandler {
   }
   PlayPause = () => {
     const songData = useMusicStore.getState().song
-    if (songData?.is_playing || false) {
+    if (songData?.is_playing) {
       useMusicStore.getState().pause()
       useMappingStore.getState().updateIcon('play', '')
     } else {
@@ -192,7 +192,7 @@ export class ActionHandler {
     })
   }
 
-  private getAppByButtonIndex = (index: number): string => {
+  private readonly getAppByButtonIndex = (index: number): string => {
     const apps = useAppStore.getState().apps
     if (index < apps.length) {
       return apps[index]?.name || 'Unknown'
@@ -229,7 +229,7 @@ export class ActionHandler {
     }
   }
 
-  private handleSendCommand = <
+  private readonly handleSendCommand = <
     R extends Extract<MusicEventPayloads, { type: SongEvent.SET }>['request'],
     P extends Extract<MusicEventPayloads, { type: SongEvent.SET; request: R }>['payload']
   >(
@@ -249,14 +249,14 @@ export class ActionHandler {
     const doc = document
 
     try {
-      if (!doc.fullscreenElement) {
-        document.documentElement.requestFullscreen()
-        Logger.info('Entering Fullscreen')
-        useMappingStore.getState().updateIcon('fullscreen', 'fullscreenActive')
-      } else {
+      if (doc.fullscreenElement) {
         doc.exitFullscreen()
         Logger.info('Leaving Fullscreen')
         useMappingStore.getState().updateIcon('fullscreen', '')
+      } else {
+        document.documentElement.requestFullscreen()
+        Logger.info('Entering Fullscreen')
+        useMappingStore.getState().updateIcon('fullscreen', 'fullscreenActive')
       }
     } catch (error) {
       Logger.error(`Error with Fullscreen!`, error)
@@ -312,7 +312,7 @@ export class ActionHandler {
     })
   }
 
-  private actionMap = {
+  private readonly actionMap = {
     fullscreen: this.toggleFullscreen,
     shuffle: this.Shuffle,
     rewind: this.Rewind,

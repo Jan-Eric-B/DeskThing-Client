@@ -52,9 +52,11 @@ export const useTimeStore = create<TimeStore>((set, get) => ({
 
     // Format the time based on server time
     const [hours, minutes] = [adjustedTime.getUTCHours(), adjustedTime.getUTCMinutes()]
-    const ampm = is24Hour ? '' : hours >= 12 ? 'PM' : 'AM'
+    const meridiem = hours >= 12 ? 'PM' : 'AM'
     const formattedHours = is24Hour ? hours : hours % 12 || 12
-    const formattedTime = `${formattedHours}:${minutes.toString().padStart(2, '0')}${!is24Hour ? ' ' + ampm : ''}`
+    const formattedMinutes = minutes.toString().padStart(2, '0')
+    const suffix = is24Hour ? '' : ` ${meridiem}`
+    const formattedTime = `${formattedHours}:${formattedMinutes}${suffix}`
 
     set({ currentTimeFormatted: formattedTime })
   }

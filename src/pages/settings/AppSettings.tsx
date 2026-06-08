@@ -27,7 +27,7 @@ const AppSettingsPage: React.FC<AppSettingsProps> = ({ appName }) => {
   const appSettings = useAppStore((store) => store.appSettings)
   const updateAppSettings = useAppStore((store) => store.updateAppSettings)
   const saveSettings = useAppStore((store) => store.saveSettings)
-  const [saving, setIsSaving] = useState(false)
+  const [saving, setSaving] = useState(false)
   const [_searchParams, setSearchParmas] = useSearchParams()
 
   const [isChanges, setIsChanges] = useState(false)
@@ -56,11 +56,11 @@ const AppSettingsPage: React.FC<AppSettingsProps> = ({ appName }) => {
     setSearchParmas({})
   }
 
-  const handleSave = async () => {
-    setIsSaving(true)
-    await saveSettings(app.name)
+  const handleSave = () => {
+    setSaving(true)
+    saveSettings(app.name)
     setTimeout(() => {
-      setIsSaving(false)
+      setSaving(false)
       setIsChanges(false)
     }, 1000)
   }

@@ -33,11 +33,9 @@ const Overlays: React.FC<OverlayProps> = ({ children }) => {
   const isConnected = useWebSocketStore((state) => state.isConnected)
   const [showHelp, setShowHelp] = useState(true)
   const height = useMemo(() => {
-    return preferences.theme.scale == 'small'
-      ? 'pb-16'
-      : preferences.theme.scale == 'medium'
-        ? 'pb-32'
-        : 'pb-48'
+    if (preferences.theme.scale == 'small') return 'pb-16'
+    if (preferences.theme.scale == 'medium') return 'pb-32'
+    return 'pb-48'
   }, [preferences.theme.scale])
 
   const margin = useMemo(() => {

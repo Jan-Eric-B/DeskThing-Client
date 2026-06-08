@@ -10,12 +10,12 @@ const VolumeOverlay: React.FC = () => {
   const setMusicVolume = useMusicStore((store) => store.setVolume)
   const color = useSettingsStore((store) => store.preferences.theme?.primary)
   const musicVolume = useMusicStore((store) => store.song?.volume)
-  const [touching, setIsTouching] = useState(false)
-  const [visible, setIsVisible] = useState(false)
+  const [touching, setTouching] = useState(false)
+  const [visible, setVisible] = useState(false)
 
   const handleInput = useCallback(
     (clientX: number, element: HTMLDivElement) => {
-      setIsTouching(true)
+      setTouching(true)
       const rect = element.getBoundingClientRect()
       const x = clientX - rect.left
       const width = rect.width
@@ -28,10 +28,10 @@ const VolumeOverlay: React.FC = () => {
   )
 
   useEffect(() => {
-    setIsVisible(true)
+    setVisible(true)
     const timer = setTimeout(() => {
-      setIsVisible(false)
-      setIsTouching(false)
+      setVisible(false)
+      setTouching(false)
     }, 3000)
 
     return () => clearTimeout(timer)

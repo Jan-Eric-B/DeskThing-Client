@@ -34,30 +34,25 @@ type SocketHandler = {
   [T in DESKTHING_DEVICE]: (data: DeskThingToDevice<T>) => void
 }
 
-// TODO: Make this type-safe
-const sendData = (data) => {
+const sendData = (data: DeviceToDeskthingData) => {
   const send = useWebSocketStore.getState().send
   send(data)
 }
 
 const handleGetManifest = (data: DeskThingToDevice<DESKTHING_DEVICE.GET>) => {
-  switch (data.request) {
-    case 'manifest': {
-      const manifest = useSettingsStore.getState().manifest
+  if (data.request === 'manifest') {
+    const manifest = useSettingsStore.getState().manifest
 
-      const returnData: DeviceToDeskthingData = {
-        type: DEVICE_DESKTHING.MANIFEST,
-        app: 'server',
-        payload: manifest
-      }
-
-      Logger.info('Sending manifest', returnData)
-      sendData(returnData)
-
-      break
+    const returnData: DeviceToDeskthingData = {
+      type: DEVICE_DESKTHING.MANIFEST,
+      app: 'server',
+      payload: manifest
     }
-    default:
-      Logger.error('Unknown request type: ', data.request)
+
+    Logger.info('Sending manifest', returnData)
+    sendData(returnData)
+  } else {
+    Logger.error('Unknown request type: ', data.request)
   }
 }
 

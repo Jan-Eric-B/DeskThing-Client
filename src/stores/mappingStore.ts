@@ -40,10 +40,10 @@ export const useMappingStore = create<MappingState>((set, get) => ({
 
   getButtonAction: (key: string, mode: EventMode) => {
     const profile = get().profile
-    if (profile?.mapping[key] && profile.mapping[key][mode]) {
+    if (profile?.mapping[key]?.[mode]) {
       const action = profile.mapping[key][mode]
       const mergedAction = {
-        ...(profile.actions && profile.actions.find((a) => a.id === action.id)),
+        ...profile.actions?.find((a) => a.id === action.id),
         ...action
       }
       return mergedAction
@@ -76,9 +76,9 @@ export const useMappingStore = create<MappingState>((set, get) => ({
     }
 
     const profile = get().profile
-    if (profile?.mapping[key] && profile.mapping[key][eventMode]) {
+    if (profile?.mapping[key]?.[eventMode]) {
       const action = profile.mapping[key][eventMode]
-      if (action && action.enabled) {
+      if (action?.enabled) {
         get().executeAction(action)
       }
     }
@@ -97,14 +97,14 @@ export const useMappingStore = create<MappingState>((set, get) => ({
           return url
         } else {
           const actionIcon = profile?.actions.find((a) => a.id === action.id).icon || action.id
-          return new URL(`../../public/icons/${actionIcon}.svg?url`, import.meta.url).href
+          return `/icons/${actionIcon}.svg`
         }
       }
       if (action.id === 'open') {
         const keywords = ['utility', 'settings', 'dashboard', 'nowplaying']
         if (keywords.includes(action.value)) {
           const actionIcon = profile?.actions.find((a) => a.id === action.id).icon || action.id
-          return new URL(`../../public/icons/${actionIcon}.svg?url`, import.meta.url).href
+          return `/icons/${actionIcon}.svg`
         } else {
           const url = `http://${ip}:${port}/icons/${action.value}/icons/${action.value}.svg?url`
           return url
@@ -112,7 +112,7 @@ export const useMappingStore = create<MappingState>((set, get) => ({
       }
 
       const actionIcon = profile?.actions.find((a) => a.id === action.id).icon || action.id
-      return new URL(`../../public/icons/${actionIcon}.svg?url`, import.meta.url).href
+      return `/icons/${actionIcon}.svg`
     } else {
       // Fetch from server
       const actionIcon = profile?.actions.find((a) => a.id === action.id).icon || action.id

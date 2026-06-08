@@ -24,9 +24,9 @@ export default function NowPlaying() {
   const isDragging = useRef(false)
   const startPos = useRef({ x: 0, y: 0 })
 
-  const refreshSong = async () => {
+  const refreshSong = () => {
     setIsRefreshing(true)
-    await refresh(true)
+    refresh(true)
     setTimeout(() => setIsRefreshing(false), Math.random() * 1000 + 1000)
   }
 

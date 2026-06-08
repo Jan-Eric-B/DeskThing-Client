@@ -26,7 +26,7 @@ const ConnectingPage: React.FC<StepProps> = ({ setNextSteps }) => {
   const connectionPort = useSettingsStore((state) => state.manifest.context.port)
 
   useEffect(() => {
-    if (connectionStatus == true) return
+    if (connectionStatus) return
 
     const timeoutId = setTimeout(() => {
       setNextSteps(true)
@@ -50,34 +50,43 @@ const ConnectingPage: React.FC<StepProps> = ({ setNextSteps }) => {
     }
   }, [connectionStatus])
 
+  let connectionContent: React.ReactNode
+  if (connectionStatus) {
+    connectionContent = (
+      <div className="flex flex-col space-x-2 items-center">
+        <p className="text-4xl font-semibold mb-2">
+          Connected to {connectionIp}:{connectionPort}
+        </p>
+        <Button onClick={disconnect} className="border border-red-500 items-center">
+          <IconDisconnect />
+          <p className="font-semibold mx-2">Disconnect</p>
+        </Button>
+      </div>
+    )
+  } else if (isReconecting) {
+    connectionContent = (
+      <div className="flex space-x-2 items-center mb-2">
+        <IconLogoGearLoading iconSize={48} />
+        <p className="text-4xl font-semibold">
+          Attempting to connect to {connectionIp}:{connectionPort}
+        </p>
+      </div>
+    )
+  } else {
+    connectionContent = (
+      <div className="flex flex-col space-x-2 items-center">
+        <p className="text-4xl font-semibold mb-2">Disconnected!</p>
+        <Button onClick={reconnect} className="border border-green-500">
+          <p>Connect</p>
+        </Button>
+      </div>
+    )
+  }
+
   return (
     <div className="w-full h-full bg-black flex-col flex items-center justify-center">
       <h1>Let&apos;s start with connecting to the DeskThing Server</h1>
-      {connectionStatus ? (
-        <div className="flex flex-col space-x-2 items-center">
-          <p className="text-4xl font-semibold mb-2">
-            Connected to {connectionIp}:{connectionPort}
-          </p>
-          <Button onClick={disconnect} className="border border-red-500 items-center">
-            <IconDisconnect />
-            <p className="font-semibold mx-2">Disconnect</p>
-          </Button>
-        </div>
-      ) : isReconecting ? (
-        <div className="flex space-x-2 items-center mb-2">
-          <IconLogoGearLoading iconSize={48} />
-          <p className="text-4xl font-semibold">
-            Attempting to connect to {connectionIp}:{connectionPort}
-          </p>
-        </div>
-      ) : (
-        <div className="flex flex-col space-x-2 items-center">
-          <p className="text-4xl font-semibold mb-2">Disconnected!</p>
-          <Button onClick={reconnect} className="border border-green-500">
-            <p>Connect</p>
-          </Button>
-        </div>
-      )}
+      {connectionContent}
     </div>
   )
 }

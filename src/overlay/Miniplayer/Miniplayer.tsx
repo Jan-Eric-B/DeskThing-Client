@@ -2,7 +2,7 @@ import { IconAlbum, IconArrowDown, IconLoading } from '@src/assets/Icons'
 import ActionComponent from '@src/components/ui/Action'
 import Key from '@src/components/ui/Key'
 import { useMappingStore, useMusicStore, useSettingsStore } from '@src/stores'
-import { Action, EventMode, ViewMode } from '@deskthing/types'
+import { Action, EventMode, TagTypes, ViewMode } from '@deskthing/types'
 import { ScrollingText } from '@src/components/ui/ScrollingText'
 import React, { MouseEvent, useEffect, useState } from 'react'
 import ProgressBar from './ProgressBar'
@@ -41,12 +41,15 @@ const Miniplayer: React.FC = () => {
   const [expanded, setExpanded] = useState(false)
   const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null)
 
-  const [refreshing, setIsRefreshing] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
   const [isAudioSource, setIsAudioSource] = useState(false)
 
   useEffect(() => {
-    if (currentView.name == 'nowplaying' || currentView?.manifest?.isAudioSource) {
+    if (
+      currentView.name == 'nowplaying' ||
+      currentView?.manifest?.tags?.includes(TagTypes.AUDIO_SOURCE)
+    ) {
       setIsAudioSource(true)
       setExpanded(true)
     } else {
@@ -56,8 +59,14 @@ const Miniplayer: React.FC = () => {
   }, [currentView])
 
   useEffect(() => {
-    setHeight(theme.scale == 'small' ? 'h-16' : theme.scale == 'medium' ? 'h-32' : 'h-48')
-    setWidth(theme.scale == 'small' ? 'w-16' : theme.scale == 'medium' ? 'w-32' : 'w-48')
+    const sizes = {
+      small: { height: 'h-16', width: 'w-16' },
+      medium: { height: 'h-32', width: 'w-32' },
+      large: { height: 'h-48', width: 'w-48' }
+    }
+    const { height: newHeight, width: newWidth } = sizes[theme.scale] ?? sizes.large
+    setHeight(newHeight)
+    setWidth(newWidth)
   }, [theme])
 
   const refreshSong = (e: MouseEvent<HTMLButtonElement>) => {
@@ -68,12 +77,12 @@ const Miniplayer: React.FC = () => {
     if (refreshing) return
 
     // Set the refreshing state
-    setIsRefreshing(true)
+    setRefreshing(true)
 
     // Set the timeout to clear the state
     setTimeout(
       () => {
-        setIsRefreshing(false)
+        setRefreshing(false)
       },
       Math.random() * 1000 + 1000
     )
@@ -85,13 +94,21 @@ const Miniplayer: React.FC = () => {
   const onClick = () => {
     if (timeoutId) clearTimeout(timeoutId)
     const newTimeout = setTimeout(() => {
-      if (currentView.name != 'nowplaying' || !currentView?.manifest?.isAudioSource) return
+      if (
+        currentView.name != 'nowplaying' ||
+        !currentView?.manifest?.tags?.includes(TagTypes.AUDIO_SOURCE)
+      )
+        return
       setExpanded(false)
     }, 12000)
     setTimeoutId(newTimeout)
 
     if (expanded) {
-      if (currentView.name != 'nowplaying' || !currentView?.manifest?.isAudioSource) return
+      if (
+        currentView.name != 'nowplaying' ||
+        !currentView?.manifest?.tags?.includes(TagTypes.AUDIO_SOURCE)
+      )
+        return
       setExpanded(false)
     } else {
       setExpanded(true)
@@ -159,7 +176,11 @@ const Miniplayer: React.FC = () => {
             className={`${height} ${width} ${miniplayer.state == ViewMode.HIDDEN ? 'max-h-0 overflow-hidden' : 'flex-shrink-0'} flex items-center justify-center`}
           >
             {song?.thumbnail ? (
-              <img src={song.thumbnail} className="w-full h-full object-cover" />
+              <img
+                src={song.thumbnail}
+                alt={song?.track_name ? `Album art for ${song.track_name}` : ''}
+                className="w-full h-full object-cover"
+              />
             ) : (
               <IconAlbum className="h-full w-full p-4" />
             )}

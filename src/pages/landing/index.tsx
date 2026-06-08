@@ -46,7 +46,7 @@ const steps: Step[] = [
  */
 const LandingPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0)
-  const [transitioning, setIsTransitioning] = useState(false)
+  const [transitioning, setTransitioning] = useState(false)
   const [showNextSteps, setShowNextSteps] = useState(false)
   const onboarding = useSettingsStore((store) => store.preferences.onboarding)
   const setPreferences = useSettingsStore((store) => store.updatePreferences)
@@ -67,9 +67,9 @@ const LandingPage: React.FC = () => {
     }
 
     setShowNextSteps(false)
-    setIsTransitioning(true)
+    setTransitioning(true)
     setTimeout(() => {
-      setIsTransitioning(false)
+      setTransitioning(false)
       if (reverse) {
         setCurrentStep((prevStep) => (prevStep - 1 + steps.length) % steps.length)
         return

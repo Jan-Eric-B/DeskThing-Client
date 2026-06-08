@@ -19,7 +19,7 @@ const TrayContent = () => {
 
   return (
     <div
-      className={`${appTrayState != ViewMode.FULL ? 'overflow-hidden' : 'pb-28 overflow-y-auto'} space-y-2 grid justify-items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 p-2 w-full overflow-hidden max-h-full h-fit`}
+      className={`${appTrayState == ViewMode.FULL ? 'pb-28 overflow-y-auto' : 'overflow-hidden'} space-y-2 grid justify-items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 p-2 w-full overflow-hidden max-h-full h-fit`}
     >
       {appTrayState == ViewMode.PEEK
         ? actionKeys.map((aKey) => (
@@ -28,8 +28,7 @@ const TrayContent = () => {
             </div>
           ))
         : appTrayState == ViewMode.FULL &&
-          apps &&
-          apps.map((app) => (
+          apps?.map((app) => (
             <div
               style={{ borderColor: `${primary || '#22c55e'}` }}
               className={`w-36 h-36 flex items-center flex-col justify-center bg-neutral-800 p-4 rounded-3xl ${app.name == currentView.name && 'border-green-500 border-2'}`}

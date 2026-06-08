@@ -33,7 +33,7 @@ const ClockPage: FC = () => {
     const handleClickOutside = (event: MouseEvent) => {
       if (configRef.current && !configRef.current.contains(event.target as Node)) {
         setShowConfig(false)
-      } else if (mainRef.current && mainRef.current.contains(event.target as Node)) {
+      } else if (mainRef.current?.contains(event.target as Node)) {
         setShowConfig(true)
       }
     }
@@ -98,10 +98,7 @@ const ClockPage: FC = () => {
       <div className="absolute w-full h-full inset-0 flex items-center justify-center">
         <p
           style={{
-            color:
-              showAlbumArt && musicData && musicData.color && musicData.color.isLight
-                ? textDark || textLight
-                : textLight
+            color: showAlbumArt && musicData?.color?.isLight ? textDark || textLight : textLight
           }}
           className="text-9xl"
         >

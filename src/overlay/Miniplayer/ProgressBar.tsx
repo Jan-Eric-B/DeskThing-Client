@@ -25,7 +25,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
     const previous = useMusicStore((store) => store.previous)
     const requestSongData = useMusicStore((store) => store.requestMusicData)
     const [totalLength, setTotalLength] = useState(0)
-    const [progress, setCurrentProgress] = useState(0)
+    const [progress, setProgress] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
     const [prevId, setPrevId] = useState('')
 
@@ -37,12 +37,12 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
       if (songData && !isDragging) {
         if (songData.id != prevId) {
           setTotalLength(songData.track_duration || 30000)
-          setCurrentProgress(songData.track_progress || 0)
+          setProgress(songData.track_progress || 0)
         }
 
         if (songData.is_playing) {
           const timer = setInterval(() => {
-            setCurrentProgress((prev) => {
+            setProgress((prev) => {
               if (songData.track_progress !== undefined) {
                 return Math.min(prev + 1000, totalLength)
               }
@@ -60,7 +60,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
       let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
       if (totalLength <= progress && !isDragging) {
         setTotalLength(30000)
-        setCurrentProgress(0)
+        setProgress(0)
         setIsDragging(false)
 
         timeoutId = setTimeout(() => {
@@ -94,7 +94,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
       if (totalLength <= progress) {
         next()
         setTotalLength(9999)
-        setCurrentProgress(0)
+        setProgress(0)
 
         let oldSongId = songData?.id
 
@@ -105,7 +105,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
         }, 2000)
       } else if (progress <= 0) {
         previous()
-        setCurrentProgress(0)
+        setProgress(0)
       } else if (isDragging) {
         Logger.info('seeking to ' + progress)
         seek(Math.round(progress))
@@ -120,7 +120,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
         const x = e.clientX - rect.left
         const percentage = x / rect.width
         const newProgress = Math.max(0, Math.min(totalLength, percentage * totalLength))
-        setCurrentProgress(newProgress)
+        setProgress(newProgress)
       }
     }
 
@@ -132,7 +132,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
         const x = touch.clientX - rect.left
         const percentage = x / rect.width
         const newProgress = Math.max(0, Math.min(totalLength, percentage * totalLength))
-        setCurrentProgress(newProgress)
+        setProgress(newProgress)
       }
     }
 
@@ -150,7 +150,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
         const x = e.clientX - rect.left
         const percentage = x / rect.width
         const newProgress = Math.max(0, Math.min(totalLength, percentage * totalLength))
-        setCurrentProgress(newProgress)
+        setProgress(newProgress)
       }
     }
 

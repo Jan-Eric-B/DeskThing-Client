@@ -83,15 +83,15 @@ const AppTray: React.FC = () => {
     }, 200)
   }, [currentView])
 
+  const getTrayHeight = () => {
+    if (appTrayState === ViewMode.PEEK) return 'h-36'
+    if (appTrayState === ViewMode.HIDDEN) return 'h-0'
+    return 'h-full'
+  }
+
   return (
     <div
-      className={`${
-        appTrayState === ViewMode.PEEK
-          ? 'h-36'
-          : appTrayState === ViewMode.HIDDEN
-            ? 'h-0'
-            : 'h-full'
-      } w-screen flex flex-col absolute top-0 ${appTrayState == ViewMode.FULL ? 'bg-zinc-950' : 'bg-zinc-950'} transition-[colors,height] z-10`}
+      className={`${getTrayHeight()} w-screen flex flex-col absolute top-0 bg-zinc-950 transition-[colors,height] z-10`}
     >
       {usePullTabs && (
         <div

@@ -116,7 +116,7 @@ export const useWebSocketStore = create<WebSocketState>((set, get) => {
     send: async (message: DeviceToDeskthingData): Promise<void> => {
       const manager = get().socketManager
       if (manager) {
-        await manager.sendMessage(message)
+        manager.sendMessage(message)
       } else {
         console.error('WebSocket is not connected')
       }
