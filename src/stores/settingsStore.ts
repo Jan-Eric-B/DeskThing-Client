@@ -161,9 +161,9 @@ export const useSettingsStore = create<SettingsState>()(
           state?.updateManifest(defaultManifest)
         }
         setTimeout(() => {
-          if (window.manifest) {
-            console.log('manifest loaded', window.manifest)
-            state?.updateManifest({ ...defaultManifest, ...window.manifest })
+          if (globalThis.manifest) {
+            console.log('manifest loaded', globalThis.manifest)
+            state?.updateManifest({ ...defaultManifest, ...globalThis.manifest })
           }
           if (!state.preferences) {
             state.updatePreferences(defaultPreferences)

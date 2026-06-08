@@ -75,7 +75,7 @@ const ErrorScreen: React.FC<ErrorScreenProps> = ({ message }) => {
 
   const clearCache = () => {
     localStorage.clear()
-    window.location.reload()
+    globalThis.location.reload()
   }
 
   return (

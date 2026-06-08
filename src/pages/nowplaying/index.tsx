@@ -68,11 +68,11 @@ export default function NowPlaying() {
 
     const handleMouseUp = () => {
       handleEnd()
-      window.removeEventListener('mousemove', handleMouseMove, { capture: true })
-      window.removeEventListener('mouseup', handleMouseUp, { capture: true })
+      globalThis.removeEventListener('mousemove', handleMouseMove, { capture: true })
+      globalThis.removeEventListener('mouseup', handleMouseUp, { capture: true })
     }
-    window.addEventListener('mousemove', handleMouseMove, { capture: true, passive: false })
-    window.addEventListener('mouseup', handleMouseUp, { capture: true, passive: false })
+    globalThis.addEventListener('mousemove', handleMouseMove, { capture: true, passive: false })
+    globalThis.addEventListener('mouseup', handleMouseUp, { capture: true, passive: false })
   }
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -89,11 +89,11 @@ export default function NowPlaying() {
 
     const handleTouchEnd = () => {
       handleEnd()
-      window.removeEventListener('touchmove', handleTouchMove, { capture: true })
-      window.removeEventListener('touchend', handleTouchEnd, { capture: true })
+      globalThis.removeEventListener('touchmove', handleTouchMove, { capture: true })
+      globalThis.removeEventListener('touchend', handleTouchEnd, { capture: true })
     }
-    window.addEventListener('touchmove', handleTouchMove, { capture: true, passive: false })
-    window.addEventListener('touchend', handleTouchEnd, { capture: true, passive: false })
+    globalThis.addEventListener('touchmove', handleTouchMove, { capture: true, passive: false })
+    globalThis.addEventListener('touchend', handleTouchEnd, { capture: true, passive: false })
   }
 
   return (

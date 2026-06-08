@@ -21,61 +21,47 @@ export const SwipeListener = () => {
     const swipeThreshold = 50
     const swipeTimeThreshold = 500 // 500ms timeout for swipe
 
+    const getPoint = (e: TouchEvent | MouseEvent, list: 'touches' | 'changedTouches') => {
+      if (e instanceof TouchEvent) {
+        const touch = e[list][0]
+        return { x: touch.clientX, y: touch.clientY }
+      }
+      return { x: e.clientX, y: e.clientY }
+    }
+
+    const getSwipeMode = (deltaX: number, deltaY: number): EventMode | null => {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // Horizontal swipe
+        if (Math.abs(deltaX) <= swipeThreshold) return null
+        return deltaX > 0 ? EventMode.SwipeRight : EventMode.SwipeLeft
+      }
+      // Vertical swipe
+      if (Math.abs(deltaY) <= swipeThreshold) return null
+      return deltaY > 0 ? EventMode.SwipeDown : EventMode.SwipeUp
+    }
+
     const startHandler = (e: TouchEvent | MouseEvent) => {
       if (e.defaultPrevented) return
-      if (e instanceof TouchEvent) {
-        startX = e.touches[0].clientX
-        startY = e.touches[0].clientY
-      } else {
-        startX = e.clientX
-        startY = e.clientY
-      }
+      const point = getPoint(e, 'touches')
+      startX = point.x
+      startY = point.y
       startTime = Date.now()
     }
 
     const endHandler = (e: TouchEvent | MouseEvent) => {
       if (e.defaultPrevented) return
-      if (!startX || !startY || !startTime) return
+      if (startX === null || startY === null || startTime === null) return
 
-      let endX: number
-      let endY: number
-
-      if (e instanceof TouchEvent) {
-        endX = e.changedTouches[0].clientX
-        endY = e.changedTouches[0].clientY
-      } else {
-        endX = e.clientX
-        endY = e.clientY
-      }
-      const endTime = Date.now()
-
-      const deltaX = endX - startX
-      const deltaY = endY - startY
-      const deltaTime = endTime - startTime
+      const point = getPoint(e, 'changedTouches')
+      const deltaX = point.x - startX
+      const deltaY = point.y - startY
+      const deltaTime = Date.now() - startTime
 
       if (deltaTime <= swipeTimeThreshold) {
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-          // Horizontal swipe
-          if (Math.abs(deltaX) > swipeThreshold) {
-            if (deltaX > 0) {
-              const action = getActions('Swipe', EventMode.SwipeRight)
-              action && executeAction(action)
-            } else {
-              const action = getActions('Swipe', EventMode.SwipeLeft)
-              action && executeAction(action)
-            }
-          }
-        } else {
-          // Vertical swipe
-          if (Math.abs(deltaY) > swipeThreshold) {
-            if (deltaY > 0) {
-              const action = getActions('Swipe', EventMode.SwipeDown)
-              action && executeAction(action)
-            } else {
-              const action = getActions('Swipe', EventMode.SwipeUp)
-              action && executeAction(action)
-            }
-          }
+        const mode = getSwipeMode(deltaX, deltaY)
+        if (mode !== null) {
+          const action = getActions('Swipe', mode)
+          if (action) executeAction(action)
         }
       }
 
@@ -84,16 +70,16 @@ export const SwipeListener = () => {
       startTime = null
     }
 
-    window.addEventListener('touchstart', startHandler, { passive: true })
-    window.addEventListener('touchend', endHandler, { passive: true })
-    window.addEventListener('mousedown', startHandler, { passive: true })
-    window.addEventListener('mouseup', endHandler, { passive: true })
+    globalThis.addEventListener('touchstart', startHandler, { passive: true })
+    globalThis.addEventListener('touchend', endHandler, { passive: true })
+    globalThis.addEventListener('mousedown', startHandler, { passive: true })
+    globalThis.addEventListener('mouseup', endHandler, { passive: true })
 
     return () => {
-      window.removeEventListener('touchstart', startHandler)
-      window.removeEventListener('touchend', endHandler)
-      window.removeEventListener('mousedown', startHandler)
-      window.removeEventListener('mouseup', endHandler)
+      globalThis.removeEventListener('touchstart', startHandler)
+      globalThis.removeEventListener('touchend', endHandler)
+      globalThis.removeEventListener('mousedown', startHandler)
+      globalThis.removeEventListener('mouseup', endHandler)
     }
   }, [])
   return null

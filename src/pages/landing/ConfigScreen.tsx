@@ -47,12 +47,12 @@ const ConfigPage: React.FC<StepProps> = ({ currentStep, setNextSteps, onNextStep
       e.stopImmediatePropagation()
     }
 
-    window.addEventListener('scroll', handleScroll, { capture: true, passive: false })
-    window.addEventListener('wheel', handleWheel, { capture: true, passive: false })
+    globalThis.addEventListener('scroll', handleScroll, { capture: true, passive: false })
+    globalThis.addEventListener('wheel', handleWheel, { capture: true, passive: false })
 
     return () => {
-      window.removeEventListener('scroll', handleScroll, { capture: true })
-      window.removeEventListener('wheel', handleWheel, { capture: true })
+      globalThis.removeEventListener('scroll', handleScroll, { capture: true })
+      globalThis.removeEventListener('wheel', handleWheel, { capture: true })
     }
   }, [])
 

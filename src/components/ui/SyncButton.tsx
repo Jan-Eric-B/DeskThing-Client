@@ -19,7 +19,7 @@ interface SyncProps {
  * @returns {React.ReactElement} - The `SyncButton` component.
  */
 const SyncButton: React.FC<SyncProps> = ({ expanded, className }) => {
-  const [syncing, setIsSyncing] = useState(false)
+  const [isSyncing, setIsSyncing] = useState(false)
   const setPreferences = useSettingsStore((state) => state.updatePreferences)
   const send = useWebSocketStore((state) => state.send)
 
@@ -55,7 +55,7 @@ const SyncButton: React.FC<SyncProps> = ({ expanded, className }) => {
       className={`${className} w-fit border-2 mt-5 md:mt-0 border-cyan-500 items-center`}
       onClick={handleSync}
     >
-      <IconRefresh className={`${syncing && 'animate-spin'}`} />
+      <IconRefresh className={`${isSyncing && 'animate-spin'}`} />
       <p
         className={`${expanded ? 'w-fit' : 'w-0'} text-nowrap text-2xl font-semibold mx-2 overflow-hidden transition-[width]`}
       >

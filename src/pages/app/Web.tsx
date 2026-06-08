@@ -259,10 +259,10 @@ const WebPage: React.FC<WebPageProps> = ({ currentView }: WebPageProps): JSX.Ele
       }
     }
 
-    window.addEventListener('message', handleIframeEvent)
+    globalThis.addEventListener('message', handleIframeEvent)
 
     return () => {
-      window.removeEventListener('message', handleIframeEvent)
+      globalThis.removeEventListener('message', handleIframeEvent)
     }
   }, [ip, port, sendSocket, appSettings, currentView])
 

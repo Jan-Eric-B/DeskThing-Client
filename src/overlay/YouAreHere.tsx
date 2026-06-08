@@ -47,7 +47,7 @@ export const YouAreHere: FC<YouAreHereProps> = ({ setShow }) => {
 
   const clearCache = () => {
     localStorage.clear()
-    window.location.reload()
+    globalThis.location.reload()
   }
 
   const handleDashboard = () => {

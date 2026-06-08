@@ -34,7 +34,7 @@ const ActionIcon: React.FC<ActionProps> = ({ url, className }) => {
         })
         if (rawSvg.ok) {
           const contentType = rawSvg.headers.get('content-type')
-          if (contentType && contentType.includes('svg')) {
+          if (contentType?.includes('svg')) {
             const text = await rawSvg.text()
             setSvgContent(text)
           } else {

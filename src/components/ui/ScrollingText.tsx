@@ -23,7 +23,7 @@ export function ScrollingText({
   text,
   className = '',
   fadeWidth = 8
-}: ScrollingTextProps): JSX.Element {
+}: Readonly<ScrollingTextProps>): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   const dupeTextRef = useRef<HTMLDivElement>(null)
@@ -42,12 +42,12 @@ export function ScrollingText({
       let isTextOverflowing: boolean | ((prevState: boolean) => boolean)
       let len: React.SetStateAction<number>
 
-      if (dupe !== null) {
-        isTextOverflowing = textElement.scrollWidth / 2 > container.offsetWidth
-        len = textElement.scrollWidth / 2
-      } else {
+      if (dupe === null) {
         isTextOverflowing = textElement.scrollWidth > container.offsetWidth
         len = textElement.scrollWidth
+      } else {
+        isTextOverflowing = textElement.scrollWidth / 2 > container.offsetWidth
+        len = textElement.scrollWidth / 2
       }
 
       setIsOverflowing(isTextOverflowing)
@@ -66,8 +66,8 @@ export function ScrollingText({
   }, [text])
 
   useEffect(() => {
-    window.addEventListener('resize', calculateOverflow)
-    return () => window.removeEventListener('resize', calculateOverflow)
+    globalThis.addEventListener('resize', calculateOverflow)
+    return () => globalThis.removeEventListener('resize', calculateOverflow)
   }, [])
 
   return (

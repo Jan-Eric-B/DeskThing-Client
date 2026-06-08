@@ -43,12 +43,12 @@ const Wheel: React.FC = () => {
       }
     }
 
-    window.addEventListener('keydown', handleEnter)
+    globalThis.addEventListener('keydown', handleEnter)
 
     setIsOpened(true)
 
     return () => {
-      window.removeEventListener('keydown', handleEnter)
+      globalThis.removeEventListener('keydown', handleEnter)
     }
   }, [selectedAction])
 

@@ -26,7 +26,7 @@ const UtilityApp = () => {
 
   const clearCache = () => {
     setPreference({ onboarding: false })
-    window.location.reload()
+    globalThis.location.reload()
   }
 
   return (

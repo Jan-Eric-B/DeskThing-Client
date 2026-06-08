@@ -23,18 +23,18 @@ const ScreenSaverWrapper: React.FC = () => {
   }
 
   useEffect(() => {
-    window.addEventListener('keydown', handleUserActivity)
-    window.addEventListener('mousedown', handleUserActivity)
-    window.addEventListener('mousemove', handleUserActivity)
-    window.addEventListener('touchstart', handleUserActivity)
-    window.addEventListener('wheel', handleUserActivity)
+    globalThis.addEventListener('keydown', handleUserActivity)
+    globalThis.addEventListener('mousedown', handleUserActivity)
+    globalThis.addEventListener('mousemove', handleUserActivity)
+    globalThis.addEventListener('touchstart', handleUserActivity)
+    globalThis.addEventListener('wheel', handleUserActivity)
 
     return () => {
-      window.removeEventListener('keydown', handleUserActivity)
-      window.removeEventListener('mousedown', handleUserActivity)
-      window.removeEventListener('mousemove', handleUserActivity)
-      window.removeEventListener('touchstart', handleUserActivity)
-      window.removeEventListener('wheel', handleUserActivity)
+      globalThis.removeEventListener('keydown', handleUserActivity)
+      globalThis.removeEventListener('mousedown', handleUserActivity)
+      globalThis.removeEventListener('mousemove', handleUserActivity)
+      globalThis.removeEventListener('touchstart', handleUserActivity)
+      globalThis.removeEventListener('wheel', handleUserActivity)
     }
   }, [screensaverActive, requireManualDismiss])
 

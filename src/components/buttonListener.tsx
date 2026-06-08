@@ -33,7 +33,7 @@ export const ButtonListener = () => {
 
       // Ensure that you dont double-call a long press
       if (!longPressTimeouts.has(e.key)) {
-        const timeout = window.setTimeout(() => {
+        const timeout = globalThis.setTimeout(() => {
           buttonStates[e.key] = EventMode.PressLong
           const longPressAction = getActions(e.code, EventMode.PressLong)
           if (longPressAction) executeAction(longPressAction)
@@ -57,17 +57,17 @@ export const ButtonListener = () => {
 
       // Clear the event timeout to cancel a long press and cleanup
       if (longPressTimeouts.has(e.key)) {
-        clearTimeout(longPressTimeouts.get(e.key)!)
+        clearTimeout(longPressTimeouts.get(e.key))
         longPressTimeouts.delete(e.key)
       }
     }
 
-    window.addEventListener('keydown', keyDownHandler)
-    window.addEventListener('keyup', keyUpHandler)
+    globalThis.addEventListener('keydown', keyDownHandler)
+    globalThis.addEventListener('keyup', keyUpHandler)
 
     return () => {
-      window.removeEventListener('keydown', keyDownHandler)
-      window.removeEventListener('keyup', keyUpHandler)
+      globalThis.removeEventListener('keydown', keyDownHandler)
+      globalThis.removeEventListener('keyup', keyUpHandler)
       longPressTimeouts.forEach((timeout) => clearTimeout(timeout))
     }
   }, [])
@@ -87,10 +87,10 @@ export const ButtonListener = () => {
       }
     }
 
-    window.addEventListener('wheel', handleScroll, { passive: true })
+    globalThis.addEventListener('wheel', handleScroll, { passive: true })
 
     return () => {
-      window.removeEventListener('wheel', handleScroll)
+      globalThis.removeEventListener('wheel', handleScroll)
     }
   }, [])
 
