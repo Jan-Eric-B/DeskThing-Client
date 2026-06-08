@@ -60,7 +60,7 @@ export default function NowPlaying() {
     e.preventDefault()
     e.stopPropagation()
     handleStart(e.clientX, e.clientY)
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       e.preventDefault()
       handleMove(e.clientX, e.clientY)
@@ -80,7 +80,7 @@ export default function NowPlaying() {
     e.stopPropagation()
     const touch = e.touches[0]
     handleStart(touch.clientX, touch.clientY)
-    
+
     const handleTouchMove = (e: TouchEvent) => {
       e.preventDefault()
       const touch = e.touches[0]
@@ -101,44 +101,44 @@ export default function NowPlaying() {
       style={{ background: song?.color?.rgb }}
       className="w-screen h-full max-h-full flex-shrink bg-black flex-col flex items-center justify-center"
     >
-        <div className="w-full col-span-2 h-full flex items-center justify-center">
-          <div
-            className="relative flex-shrink-0"
-            style={{
-              width: `${customSize.width}px`,
-              height: `${customSize.height}px`
-            }}
+      <div className="w-full col-span-2 h-full flex items-center justify-center">
+        <div
+          className="relative flex-shrink-0"
+          style={{
+            width: `${customSize.width}px`,
+            height: `${customSize.height}px`
+          }}
+        >
+          <button
+            disabled={isRefreshing}
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+            className={`relative h-full flex-shrink-0 w-full cursor-grab active:cursor-grabbing `}
           >
-            <button
-              disabled={isRefreshing}
-              onMouseDown={handleMouseDown}
-              onTouchStart={handleTouchStart}
-              className={`relative h-full flex-shrink-0 w-full cursor-grab active:cursor-grabbing `}
-            >
-              {isRefreshing ? (
-                <IconLogoGearLoading className="select-none absolute animate-fade top-0 left-0 w-full h-full object-cover rounded-lg border shadow-lg" />
-              ) : (
-                <>
-                  <IconAlbum
-                    className="select-none w-full h-full absolute animate-fade top-0 left-0 object-cover rounded-lg border shadow-lg"
-                    style={{ pointerEvents: 'none' }}
-                  />
-                  <img
-                    className="select-none absolute w-full h-full animate-fade top-0 left-0 object-cover rounded-lg border shadow-lg"
-                    src={song?.thumbnail || ''}
-                    alt=""
-                    style={{
-                      display: song?.thumbnail ? 'block' : 'none',
-                      pointerEvents: 'none',
-                      userSelect: 'none'
-                    }}
-                    draggable="false"
-                    onError={(e) => (e.currentTarget.style.display = 'none')}
-                  />
-                </>
-              )}
-            </button>
-          </div>
+            {isRefreshing ? (
+              <IconLogoGearLoading className="select-none absolute animate-fade top-0 left-0 w-full h-full object-cover rounded-lg border shadow-lg" />
+            ) : (
+              <>
+                <IconAlbum
+                  className="select-none w-full h-full absolute animate-fade top-0 left-0 object-cover rounded-lg border shadow-lg"
+                  style={{ pointerEvents: 'none' }}
+                />
+                <img
+                  className="select-none absolute w-full h-full animate-fade top-0 left-0 object-cover rounded-lg border shadow-lg"
+                  src={song?.thumbnail || ''}
+                  alt=""
+                  style={{
+                    display: song?.thumbnail ? 'block' : 'none',
+                    pointerEvents: 'none',
+                    userSelect: 'none'
+                  }}
+                  draggable="false"
+                  onError={(e) => (e.currentTarget.style.display = 'none')}
+                />
+              </>
+            )}
+          </button>
+        </div>
         <div
           style={{ color: song?.color?.isLight ? textDark : textLight }}
           className={`ml-10 col-span-4 flex justify-center flex-col`}

@@ -69,7 +69,9 @@ export class WebSocketManager {
   async connect(url?: string) {
     this.url = url || this.url
 
-    const id = Math.floor(Math.random() * 10000).toString().padStart(4, '0')
+    const id = Math.floor(Math.random() * 10000)
+      .toString()
+      .padStart(4, '0')
 
     if (this.url == undefined || !this.url) {
       console.warn(`[${id}] No WebSocket URL provided`)

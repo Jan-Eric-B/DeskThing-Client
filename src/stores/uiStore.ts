@@ -1,4 +1,3 @@
-
 import { create } from 'zustand'
 
 interface UIState {
@@ -8,7 +7,7 @@ interface UIState {
 
 /**
  * The `useUIStore` is a Zustand store that manages the UI state of the application.
- * 
+ *
  * The store provides the following functionality:
  * - `isScreensaverActive`: Tracks if the screensaver is currently active
  * - `isMenuOpen`: Tracks if the main menu is currently open
@@ -20,5 +19,5 @@ interface UIState {
 export const useUIStore = create<UIState>((set) => ({
   isScreensaverActive: false,
 
-  setScreensaverActive: (active) => set({ isScreensaverActive: active }),
+  setScreensaverActive: (active) => set({ isScreensaverActive: active })
 }))

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { WebSocketManager } from '../utils/websocketManager' 
+import { WebSocketManager } from '../utils/websocketManager'
 import { useSettingsStore } from './settingsStore'
 import { useMusicStore } from './musicStore'
 import { DeviceToDeskthingData, DeskThingToDeviceCore } from '@deskthing/types'
@@ -30,10 +30,9 @@ export interface WebSocketState {
 }
 
 export const useWebSocketStore = create<WebSocketState>((set, get) => {
-  
   const manifest = useSettingsStore.getState().manifest
   const clientId = useClientStore.getState().client.clientId
-  
+
   let wsUrl: string | undefined = undefined
 
   if (manifest.context.ip && manifest.context.port) {
@@ -56,7 +55,7 @@ export const useWebSocketStore = create<WebSocketState>((set, get) => {
       isReconnecting: status === 'reconnecting'
     })
   })
-  
+
   if (wsUrl) {
     manager.connect()
   }
@@ -123,7 +122,9 @@ export const useWebSocketStore = create<WebSocketState>((set, get) => {
       }
     },
 
-    addListener: (listener: (msg: DeskThingToDeviceCore & { app?: string }) => void): (() => void) => {
+    addListener: (
+      listener: (msg: DeskThingToDeviceCore & { app?: string }) => void
+    ): (() => void) => {
       const manager = get().socketManager
       if (manager) {
         manager.addListener(listener)

@@ -1,9 +1,5 @@
 import { useMusicStore, useWebSocketStore } from '@src/stores'
-import {
-  DESKTHING_DEVICE,
-  DeskThingToDeviceCore,
-  SongData
-} from '@deskthing/types'
+import { DESKTHING_DEVICE, DeskThingToDeviceCore, SongData } from '@deskthing/types'
 import { useEffect, useState } from 'react'
 import { handleServerSocket } from '@src/utils/serverWebsocketHandler'
 /**

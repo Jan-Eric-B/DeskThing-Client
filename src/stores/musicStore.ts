@@ -42,13 +42,12 @@ export const useMusicStore = create<MusicState>((set, get) => ({
 
     // Encoding the url for use by the app
     if (newData.thumbnail) {
-
       // Handle any http urls
       if (newData.thumbnail.startsWith('http')) {
         const context = useSettingsStore.getState().manifest?.context
         if (context.id == ClientPlatformIDs.CarThing || context.ip == 'localhost') {
           if (newData.thumbnail.includes(`${context.ip}:${context.port}`)) return // already parsed as a corrected IP
-          
+
           newData.thumbnail = `http://${context.ip}:${context.port}/proxy/v1?url=${encodeURIComponent(newData.thumbnail)}`
         }
       } else if (newData.thumbnail.startsWith('/')) {
@@ -238,32 +237,24 @@ const debounceTimers: { [key in AUDIO_REQUESTS]?: NodeJS.Timeout } = {}
 const createWSAction = async (
   songData: Extract<DeviceToDeskthingData, { app: 'music' }>
 ): Promise<void> => {
-  try {
+  const send = useWebSocketStore.getState().send
 
-    const send = useWebSocketStore.getState().send
-
-    // Clear any existing timeout for this request type
-    if (debounceTimers[songData.request]) {
-      clearTimeout(debounceTimers[songData.request])
-      // Set a new timeout
-      debounceTimers[songData.request] = setTimeout(() => {
-        send(songData)
-        delete debounceTimers[songData.request]
-      }, 300) // 100ms debounce delay
-
-    } else {
-
-      // send first then wait on second
+  // Clear any existing timeout for this request type
+  if (debounceTimers[songData.request]) {
+    clearTimeout(debounceTimers[songData.request])
+    // Set a new timeout
+    debounceTimers[songData.request] = setTimeout(() => {
       send(songData)
-      
-      debounceTimers[songData.request] = setTimeout(() => {
-        // do nothing timer
-        delete debounceTimers[songData.request]
-      }, 300) // 100ms debounce delay
-    }
-      
-  } catch (error) {
-    throw error
+      delete debounceTimers[songData.request]
+    }, 300) // 100ms debounce delay
+  } else {
+    // send first then wait on second
+    send(songData)
+
+    debounceTimers[songData.request] = setTimeout(() => {
+      // do nothing timer
+      delete debounceTimers[songData.request]
+    }, 300) // 100ms debounce delay
   }
 }
 

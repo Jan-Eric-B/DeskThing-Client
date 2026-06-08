@@ -28,7 +28,7 @@ const SystemApps = [
 /**
  * The main navigation router component for the application. This component sets up the routing
  * structure and maps routes to the appropriate page components.
- * 
+ *
  * The router handles the following functionality:
  * - Redirects the user to the appropriate page based on their preferences and onboarding status
  * - Defines the routes for the core system applications (e.g. "nowplaying", "dashboard", "settings")

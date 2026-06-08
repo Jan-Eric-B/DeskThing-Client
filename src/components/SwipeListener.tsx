@@ -4,7 +4,7 @@ import { EventMode } from '@deskthing/types'
 
 /**
  * A React component that listens for swipe gestures on the window and executes corresponding actions based on the swipe direction.
- * 
+ *
  * The component uses the `useMappingStore` hook to access the `executeAction` and `getButtonAction` functions from the store.
  * It sets up event listeners for `touchstart`, `touchend`, `mousedown`, and `mouseup` events on the window.
  * When a swipe gesture is detected, the component retrieves the corresponding action from the store and executes it.

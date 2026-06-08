@@ -139,8 +139,8 @@ const Miniplayer: React.FC = () => {
           onMouseEnter={() => setTabVisible(true)}
           onTouchStart={() => setTabVisible(true)}
         >
-          <Button 
-            className="hover:bg-zinc-800 rounded-full p-2 transition-colors duration-200" 
+          <Button
+            className="hover:bg-zinc-800 rounded-full p-2 transition-colors duration-200"
             onClick={onToggleHeight}
           >
             <IconArrowDown

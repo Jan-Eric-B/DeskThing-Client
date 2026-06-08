@@ -3,7 +3,7 @@
  * @description Error Boundary component for handling errors in the application.
  * @author Riprod
  * @version 0.8.0
-*/
+ */
 import Logger from '@src/utils/Logger'
 import React, { ErrorInfo, ReactNode, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -19,9 +19,9 @@ interface ErrorBoundaryState {
 
 /**
  * Provides an error boundary component to handle errors in the application.
- * 
+ *
  * The `ErrorBoundary` component is a React component that acts as a boundary for catching and handling errors that occur in its child components. When an error occurs, it will display a fallback UI instead of the normal application content.
- * 
+ *
  * The `ErrorScreen` component is a functional component that is rendered when an error occurs. It displays the error message and provides a button to reload the page and clear the cache.
  */
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {

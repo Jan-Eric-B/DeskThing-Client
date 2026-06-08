@@ -10,10 +10,19 @@ export default [
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
   {
-    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+    settings: {
+      react: {
+        version: 'detect'
+      }
+    }
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
       parser: tseslint.parser,
     },
     plugins: {
@@ -29,12 +38,13 @@ export default [
       'prettier/prettier': ['error', {
         endOfLine: 'auto'
       }],
-      '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }]
+      // TypeScript already validates props; the prop-types rule is redundant noise here.
+      'react/prop-types': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', {
+        varsIgnorePattern: '^_',
+        argsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_'
+      }]
     },
-    settings: {
-      react: {
-        version: 'detect'
-      }
-    }
   },
 ]

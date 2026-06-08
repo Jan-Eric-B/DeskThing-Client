@@ -83,3 +83,4 @@ export const SettingsColorComponent: React.FC<SettingsColorProps> = memo(
     )
   }
 )
+SettingsColorComponent.displayName = 'SettingsColorComponent'

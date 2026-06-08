@@ -20,7 +20,7 @@ export const ServerStatus = () => {
     <div className="fixed top-4 left-4 z-40 flex items-center rounded-lg bg-rose-950 px-4 py-2 text-sm text-white">
       {isReconnecting ? (
         <div className="flex items-center">
-          <IconLoading iconSize={12} strokeWidth={5} className='animate-spin mr-2' />
+          <IconLoading iconSize={12} strokeWidth={5} className="animate-spin mr-2" />
           <p>Reconnecting</p>
         </div>
       ) : (

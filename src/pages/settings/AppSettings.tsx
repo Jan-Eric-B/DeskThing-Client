@@ -12,10 +12,10 @@ interface AppSettingsProps {
 
 /**
  * Renders the AppSettingsPage component, which displays the settings for a specific app.
- * 
+ *
  * The component fetches the app settings from the app store, and allows the user to update and save the settings.
  * It also handles the case where the WebSocket connection is not established, displaying a "Not connected" message.
- * 
+ *
  * @param {AppSettingsProps} props - The props for the AppSettingsPage component.
  * @param {string} props.appName - The name of the app to display the settings for.
  * @returns {React.ReactElement} - The rendered AppSettingsPage component.

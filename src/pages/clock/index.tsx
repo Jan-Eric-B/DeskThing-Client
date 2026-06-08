@@ -49,17 +49,26 @@ const ClockPage: FC = () => {
     syncTime()
   }, [use24hour])
 
-  const handle24HourChange = useCallback((value: boolean) => {
-    updatePreferences({ use24hour: value })
-  }, [updatePreferences])
+  const handle24HourChange = useCallback(
+    (value: boolean) => {
+      updatePreferences({ use24hour: value })
+    },
+    [updatePreferences]
+  )
 
-  const handleTextLightChange = useCallback((value: string) => {
-    updateTheme({ textLight: value })
-  }, [updateTheme])
+  const handleTextLightChange = useCallback(
+    (value: string) => {
+      updateTheme({ textLight: value })
+    },
+    [updateTheme]
+  )
 
-  const handleTextDarkChange = useCallback((value: string) => {
-    updateTheme({ textDark: value })
-  }, [updateTheme])
+  const handleTextDarkChange = useCallback(
+    (value: string) => {
+      updateTheme({ textDark: value })
+    },
+    [updateTheme]
+  )
 
   const settingsTextLight = {
     value: textLight,
@@ -90,7 +99,7 @@ const ClockPage: FC = () => {
         <p
           style={{
             color:
-              (showAlbumArt && musicData && musicData.color && musicData.color.isLight)
+              showAlbumArt && musicData && musicData.color && musicData.color.isLight
                 ? textDark || textLight
                 : textLight
           }}

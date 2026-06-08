@@ -1,7 +1,17 @@
-import { LOGGING_LEVELS, App, AppSettings, ClientManifest, MiniplayerSettings, Theme, Action, ActionReference, AUDIO_REQUESTS, KeyReference, SongData } from '@deskthing/types'
+import {
+  LOGGING_LEVELS,
+  App,
+  AppSettings,
+  ClientManifest,
+  MiniplayerSettings,
+  Theme,
+  Action,
+  ActionReference,
+  AUDIO_REQUESTS,
+  KeyReference,
+  SongData
+} from '@deskthing/types'
 import { CombinedButtonMapping, Log } from '.'
-
-
 
 export type SocketData =
   | SocketAction
@@ -36,7 +46,7 @@ export interface AppTriggerLog extends BaseSocket {
   type: 'log'
   request: LOGGING_LEVELS
   payload: {
-    message: string,
+    message: string
     data: any[]
   }
 }
@@ -134,7 +144,7 @@ export interface OutgoingSocketSettings {
   app: string
   type: 'set'
   request: 'settings'
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   payload?: { id: string; value: any }
 }
 

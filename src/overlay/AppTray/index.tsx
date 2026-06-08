@@ -127,7 +127,7 @@ const AppTray: React.FC = () => {
           </Button>
         </div>
       </div>
-        <button
+      <button
         className={`${appTrayState === ViewMode.HIDDEN ? 'opacity-0' : ' bottom-0 '} w-screen absolute bg-zinc-900 h-5 flex items-center justify-center`}
         onClick={onClick}
       >

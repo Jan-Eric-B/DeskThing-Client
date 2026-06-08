@@ -1,10 +1,9 @@
 import { create } from 'zustand'
 import { useSettingsStore } from './settingsStore'
-import Logger from '@src/utils/Logger'
 
 /**
  * Manages the time-related state and functionality for the application.
- * 
+ *
  * The `useTimeStore` is a Zustand store that provides the following:
  * - `currentTimeFormatted`: The current time formatted as a string based on the user's preferences.
  * - `utcTime`: The server's current UTC time in milliseconds.

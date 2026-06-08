@@ -12,18 +12,26 @@
  * Additional handlers can be added to the `socketHandlers` object as needed.
  */
 
-import { useAppStore, useClientStore, useMappingStore, useSettingsStore, useWebSocketStore } from '@src/stores'
+import {
+  useAppStore,
+  useClientStore,
+  useMappingStore,
+  useSettingsStore,
+  useWebSocketStore
+} from '@src/stores'
 import { useTimeStore } from '@src/stores/timeStore'
 import Logger from './Logger'
-import { DEVICE_CLIENT, DESKTHING_DEVICE, DeskThingToDeviceCore, DEVICE_DESKTHING, DeviceToDeskthingData, DeskThingToDeviceData } from '@deskthing/types'
-
+import {
+  DESKTHING_DEVICE,
+  DeskThingToDeviceCore,
+  DEVICE_DESKTHING,
+  DeviceToDeskthingData
+} from '@deskthing/types'
 
 type DeskThingToDevice<T extends DESKTHING_DEVICE> = Extract<DeskThingToDeviceCore, { type: T }>
 
 type SocketHandler = {
-  [T in DESKTHING_DEVICE]: (
-    data: DeskThingToDevice<T>
-  ) => void
+  [T in DESKTHING_DEVICE]: (data: DeskThingToDevice<T>) => void
 }
 
 // TODO: Make this type-safe
@@ -63,9 +71,7 @@ const handleSetTime = (data: DeskThingToDevice<DESKTHING_DEVICE.TIME>) => {
   }
 }
 
-const HANDLE_GLOBAL_SETTINGS = (
-  data: DeskThingToDevice<DESKTHING_DEVICE.GLOBAL_SETTINGS>
-) => {
+const HANDLE_GLOBAL_SETTINGS = (data: DeskThingToDevice<DESKTHING_DEVICE.GLOBAL_SETTINGS>) => {
   const setAppSettings = useAppStore.getState().setAppSettings
   setAppSettings(data.payload)
 }

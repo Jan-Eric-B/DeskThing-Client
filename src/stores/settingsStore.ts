@@ -121,13 +121,14 @@ export const useSettingsStore = create<SettingsState>()(
               app: 'server',
               payload: {
                 currentApp: newPreferences.currentView?.name,
-                previousApp: state.preferences.currentView?.name,
+                previousApp: state.preferences.currentView?.name
               }
             })
           }
           return {
-          preferences: { ...state.preferences, ...newPreferences }
-        }}),
+            preferences: { ...state.preferences, ...newPreferences }
+          }
+        }),
       updateCurrentView: (newView) => {
         const send = useWebSocketStore.getState().send
         send({

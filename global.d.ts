@@ -1,4 +1,4 @@
-import { ClientManifest } from "@deskthing/types"
+import { ClientManifest } from '@deskthing/types'
 
 declare global {
   interface Window {

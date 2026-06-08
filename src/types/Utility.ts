@@ -1,8 +1,7 @@
-import { LOGGING_LEVELS } from "@deskthing/types"
+import { LOGGING_LEVELS } from '@deskthing/types'
 
 export interface Log {
-    type: LOGGING_LEVELS
-    payload: string
-    app: string
-  }
-  
+  type: LOGGING_LEVELS
+  payload: string
+  app: string
+}

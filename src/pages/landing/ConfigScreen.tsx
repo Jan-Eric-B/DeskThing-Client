@@ -72,7 +72,7 @@ const ConfigPage: React.FC<StepProps> = ({ currentStep, setNextSteps, onNextStep
         onClick={handleClose}
         className="w-full px-3 flex-shrink h-full flex flex-col items-center justify-center bg-zinc-900"
       >
-        <h1 className="text-4xl">Let's setup the config</h1>
+        <h1 className="text-4xl">Let&apos;s setup the config</h1>
         <div
           className={`${showConfig ? 'opacity-0' : 'opacity-100'} space-x-4 transition-[opacity,height] ${onLoad ? 'h-20' : 'h-0'} duration-500 flex items-center`}
         >
@@ -85,7 +85,8 @@ const ConfigPage: React.FC<StepProps> = ({ currentStep, setNextSteps, onNextStep
               <p className="text-nowrap text-2xl font-semibold mx-2">Edit Config</p>
             </Button>
           )}
-          {onLoad && <SyncButton expanded className="animate-dropDelay" />}        </div>
+          {onLoad && <SyncButton expanded className="animate-dropDelay" />}{' '}
+        </div>
       </div>
     </div>
   )

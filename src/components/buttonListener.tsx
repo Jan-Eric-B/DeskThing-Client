@@ -4,9 +4,9 @@ import { EventMode } from '@deskthing/types'
 
 /**
  * The `ButtonListener` component is responsible for handling keyboard and mouse wheel events and executing corresponding actions.
- * 
+ *
  * It sets up event listeners for `keydown`, `keyup`, and `wheel` events, and uses the `useMappingStore` to retrieve and execute the appropriate actions based on the event type and key/scroll direction.
- * 
+ *
  * The component also manages the state of button presses, including handling long presses and differentiating between short and long presses.
  */
 export const ButtonListener = () => {

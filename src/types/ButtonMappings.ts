@@ -1,21 +1,20 @@
-import { Action, ActionReference, EventMode } from "@deskthing/types"
+import { Action, ActionReference, EventMode } from '@deskthing/types'
 
 export type Profile = {
-    version: string
-    version_code: number
-    id: string
-    name: string
-    description?: string
-    trigger_app?: string
-    extends?: string
+  version: string
+  version_code: number
+  id: string
+  name: string
+  description?: string
+  trigger_app?: string
+  extends?: string
+}
+
+export interface CombinedButtonMapping extends Profile {
+  mapping: {
+    [key: string]: {
+      [Mode in EventMode]?: ActionReference
+    }
   }
-  
-  export interface CombinedButtonMapping extends Profile {
-    mapping: {
-      [key: string]: {
-        [Mode in EventMode]?: ActionReference
-      }
-    },
-    actions: Action[]
-  }
-  
+  actions: Action[]
+}

@@ -18,7 +18,6 @@ import { useActionStore } from './actionStore'
  * You're basically making a relational database over here
  */
 
-
 /**
  * The mapping store manages the button mappings and actions for the application.
  * It provides functions to execute actions, update icons, and retrieve action and key URLs.

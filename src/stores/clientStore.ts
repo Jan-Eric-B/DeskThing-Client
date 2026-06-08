@@ -35,7 +35,7 @@ const defaultManifest: ClientManifest = {
 }
 
 const defaultConfig: ClientConfigurations = {
-  profileId: 'unset', 
+  profileId: 'unset',
   version: '',
   appTrayState: ViewMode.HIDDEN,
   volume: VolMode.WHEEL,
@@ -112,23 +112,38 @@ export interface ClientState {
 export const useClientStore = create<ClientState>()((set, get) => ({
   client: defaultClient,
   updateClient: (newClient) => {
-    if (newClient.currentConfiguration && (newClient.currentConfiguration?.profileId || undefined) !== get().client.currentConfiguration?.profileId || undefined) {
+    if (
+      (newClient.currentConfiguration &&
+        (newClient.currentConfiguration?.profileId || undefined) !==
+          get().client.currentConfiguration?.profileId) ||
+      undefined
+    ) {
       const updatePreferences = useSettingsStore.getState().updatePreferences
       updatePreferences(newClient.currentConfiguration)
     }
 
-    if (newClient.currentMapping && (newClient.currentMapping?.profileId || undefined) !== get().client.currentMapping?.profileId || undefined) {
-        const setProfile = useMappingStore.getState().setProfile
-        setProfile(newClient.currentMapping)
+    if (
+      (newClient.currentMapping &&
+        (newClient.currentMapping?.profileId || undefined) !==
+          get().client.currentMapping?.profileId) ||
+      undefined
+    ) {
+      const setProfile = useMappingStore.getState().setProfile
+      setProfile(newClient.currentMapping)
     }
 
-    
     console.log('client ID updated to', newClient.clientId)
 
     set((state) => ({
-      client: { ...state.client, ...newClient, currentConfiguration: { profileId: (newClient.currentConfiguration?.profileId || undefined)}, currentMapping: { profileId: (newClient.currentMapping?.profileId || undefined) } } as Client
+      client: {
+        ...state.client,
+        ...newClient,
+        currentConfiguration: { profileId: newClient.currentConfiguration?.profileId || undefined },
+        currentMapping: { profileId: newClient.currentMapping?.profileId || undefined }
+      } as Client
     }))
-  },  updateConfiguration: (newConfig) =>
+  },
+  updateConfiguration: (newConfig) =>
     set((state) => ({
       client: {
         ...state.client,

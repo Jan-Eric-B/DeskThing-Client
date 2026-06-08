@@ -14,7 +14,7 @@ interface SkipSetupButtonProps {
  * to the `dashboard`.
  * The button also displays an arrow icon that animates when the button is clicked.
  */
-const SkipSetupButton: React.FC<SkipSetupButtonProps> = ({ text = "Skip Setup"}) => {
+const SkipSetupButton: React.FC<SkipSetupButtonProps> = ({ text = 'Skip Setup' }) => {
   const setPreferences = useSettingsStore((state) => state.updatePreferences)
   const [skipping, setIsSkipping] = useState(false)
 

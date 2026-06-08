@@ -1,6 +1,6 @@
 /**
  * Renders a fixed notification overlay on the right side of the screen.
- * 
+ *
  * Currently not implemented yet, but will be used to display notifications.
  */
 const NotificationOverlay: React.FC = () => {
