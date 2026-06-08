@@ -1,6 +1,6 @@
-import { Icon } from '.'
+import { Icon, IconProps } from '.'
 
-function IconLayoutgrid(props): JSX.Element {
+function IconLayoutgrid(props: Readonly<IconProps>): JSX.Element {
   return (
     <Icon {...props}>
       <svg viewBox="0 0 24 24">

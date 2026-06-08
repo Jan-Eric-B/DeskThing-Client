@@ -29,7 +29,7 @@ export const Icon = ({
   height = iconSize,
   children,
   ...restProps
-}: IconProps): JSX.Element => {
+}: Readonly<IconProps>): JSX.Element => {
   return (
     <svg
       color={color}

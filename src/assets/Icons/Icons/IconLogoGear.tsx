@@ -1,6 +1,6 @@
 import { Icon, IconProps } from '.'
 
-function IconLogoGear(props: IconProps): JSX.Element {
+function IconLogoGear(props: Readonly<IconProps>): JSX.Element {
   const strokeWidth = props.strokeWidth || 1.5
 
   return (

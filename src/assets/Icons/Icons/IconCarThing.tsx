@@ -1,9 +1,19 @@
-import { Icon } from '.'
+import { Icon, IconProps } from '.'
 
-function IconCarThing(props): JSX.Element {
-  const highlighted = props.highlighted || []
-  const highlightColor = props.highlightColor || ''
+interface IconCarThingProps extends Omit<IconProps, 'fontSize'> {
+  highlighted?: string[]
+  highlightColor?: string
+  fontSize?: number
+  text?: string
+}
 
+function IconCarThing({
+  highlighted = [],
+  highlightColor = '',
+  fontSize,
+  text = '',
+  ...props
+}: Readonly<IconCarThingProps>): JSX.Element {
   return (
     <Icon {...props} strokeWidth={props.strokeWidth || 20}>
       {' '}
@@ -47,12 +57,12 @@ function IconCarThing(props): JSX.Element {
 
           <text
             x="480"
-            y={props.fontSize * 0.2 + 350 || '350'}
+            y={fontSize ? fontSize * 0.2 + 350 : 350}
             fill="white"
-            fontSize={props.fontSize || 100}
+            fontSize={fontSize || 100}
             textAnchor="middle"
           >
-            {props.text || ''}
+            {text}
           </text>
         </g>
       </svg>

@@ -1,6 +1,6 @@
-import { Icon } from '.'
+import { Icon, IconProps } from '.'
 
-function IconConnecting(props): JSX.Element {
+function IconConnecting(props: Readonly<IconProps>): JSX.Element {
   return (
     <Icon {...props} fill="currentColor">
       <svg viewBox="0 0 24 24">

@@ -1,6 +1,6 @@
-import { Icon } from '.'
+import { Icon, IconProps } from '.'
 
-function IconSkip(props): JSX.Element {
+function IconSkip(props: Readonly<IconProps>): JSX.Element {
   return (
     <Icon {...props}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

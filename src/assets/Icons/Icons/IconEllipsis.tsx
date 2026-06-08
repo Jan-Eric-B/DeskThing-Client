@@ -1,6 +1,6 @@
 import { Icon, IconProps } from '.'
 
-function IconEllipsis(props: IconProps): JSX.Element {
+function IconEllipsis(props: Readonly<IconProps>): JSX.Element {
   return (
     <Icon {...props}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={props.fill || 'none'}>

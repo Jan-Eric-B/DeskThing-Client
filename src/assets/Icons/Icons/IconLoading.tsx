@@ -1,6 +1,6 @@
 import { Icon, IconProps } from '.'
 
-function IconLoading(props: IconProps): JSX.Element {
+function IconLoading(props: Readonly<IconProps>): JSX.Element {
   return (
     <Icon {...props} fill={props.fill || 'none'}>
       <svg

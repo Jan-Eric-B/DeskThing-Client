@@ -5,7 +5,7 @@ interface ToggleProps extends IconProps {
   checked: boolean
 }
 
-function IconToggle({ checked, ...props }: ToggleProps): JSX.Element {
+function IconToggle({ checked, ...props }: Readonly<ToggleProps>): JSX.Element {
   const circleRef = useRef<SVGCircleElement>(null)
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { Icon, IconProps } from '.'
 
-function IconLogo(props: IconProps): JSX.Element {
+function IconLogo(props: Readonly<IconProps>): JSX.Element {
   return (
     <Icon {...props} width={props.width || '1152'} height={props.height || '244.25'}>
       <svg

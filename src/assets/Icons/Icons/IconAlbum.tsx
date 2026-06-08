@@ -1,6 +1,6 @@
-import { Icon } from '.'
+import { Icon, IconProps } from '.'
 
-function IconArrowUp(props): JSX.Element {
+function IconArrowUp(props: Readonly<IconProps>): JSX.Element {
   return (
     <Icon {...props}>
       <svg viewBox="0 0 24 24">
