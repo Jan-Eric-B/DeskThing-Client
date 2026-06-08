@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:device": "start \"\" \"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --user-data-dir=.browser-profile --auto-open-devtools-for-tabs http://localhost:5173 && vite",
     "host": "vite --host",
     "build": "npx @deskthing/cli package-client",
     "build:legacy": "tsc && vite build --base=\"./\"",

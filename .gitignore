@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Dedicated browser profile for `npm run dev:device` (persists 800x480 emulation)
+.browser-profile
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
