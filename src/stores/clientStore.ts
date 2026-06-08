@@ -87,6 +87,7 @@ const defaultClient: Client = {
   clientId: 'unspecified-id',
   connected: false,
   identifiers: {},
+  meta: {},
   connectionState: ConnectionState.Disconnected,
   timestamp: 0,
   currentConfiguration: defaultConfig,

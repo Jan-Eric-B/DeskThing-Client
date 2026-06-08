@@ -9,6 +9,7 @@ import { SettingsRankedComponent } from './SettingsRanked'
 import { SettingsSelectComponent } from './SettingsSelect'
 import { SettingsStringComponent } from './SettingsString'
 import { SettingsColorComponent } from './SettingsColor'
+import { SettingsFileComponent } from './SettingsFile'
 
 interface SettingsProps {
   setting: SettingsType
@@ -31,7 +32,8 @@ const SETTINGS_COMPONENTS: {
   ranked: SettingsRankedComponent,
   select: SettingsSelectComponent,
   string: SettingsStringComponent,
-  color: SettingsColorComponent
+  color: SettingsColorComponent,
+  file: SettingsFileComponent
 } as const
 
 export const Settings: React.FC<SettingsProps> = ({ setting, className, handleSettingChange }) => {

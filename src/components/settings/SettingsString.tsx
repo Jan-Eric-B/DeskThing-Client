@@ -29,8 +29,8 @@ export const SettingsStringComponent: React.FC<SettingsStringProps> = ({
         <input
           disabled={setting.disabled}
           type="text"
-          value={setting.value as string}
-          maxLength={(setting as SettingsString).maxLength}
+          value={setting.value}
+          maxLength={setting.maxLength}
           onChange={(e) => handleSettingChange(e.target.value)}
           className={commonClasses + ' text-black w-96 max-w-s'}
         />

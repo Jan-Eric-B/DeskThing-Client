@@ -77,12 +77,12 @@ const AppSettingsPage: React.FC<AppSettingsProps> = ({ appName }) => {
             {saving ? (
               <IconLoading iconSize={32} className="animate-spin" />
             ) : (
-              <IconSave iconSize="32" />
+              <IconSave iconSize={32} />
             )}
           </Button>
         ) : (
           <Button onClick={onClick}>
-            <IconArrowLeft iconSize="32" className="w-full h-full" />
+            <IconArrowLeft iconSize={32} className="w-full h-full" />
           </Button>
         )}
         <h1 className="text-4xl font-semibold">{app.manifest?.label || app.name}</h1>

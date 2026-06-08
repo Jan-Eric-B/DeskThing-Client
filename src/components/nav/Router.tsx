@@ -14,7 +14,7 @@ import Logger from '@src/utils/Logger'
  * These apps are typically accessible from the main navigation or landing page, and may have special
  * handling or behavior compared to other "user" applications.
  */
-const SystemApps = [
+const SystemApps = new Set([
   'nowplaying',
   'developer',
   'landing',
@@ -23,7 +23,7 @@ const SystemApps = [
   'utility',
   'dashboard',
   'clock'
-]
+])
 
 /**
  * The main navigation router component for the application. This component sets up the routing
@@ -42,7 +42,7 @@ const NavRouter: React.FC = () => {
   useEffect(() => {
     const currentView = preferences.currentView?.name || 'dashboard'
     if (preferences.onboarding) {
-      if (SystemApps.includes(currentView)) {
+      if (SystemApps.has(currentView)) {
         navigate('/' + currentView)
       } else {
         navigate('/app/' + currentView)
@@ -54,22 +54,20 @@ const NavRouter: React.FC = () => {
   }, [navigate, preferences])
 
   return (
-    <>
-      <Routes>
-        <Route path={'/'} element={<LandingPage />} />
-        <Route path={'/preferences'} element={<LandingPage />} />
-        <Route path={'/developer'} element={<LandingPage />} />
-        <Route path={'/nowplaying'} element={<NowPlaying />} />
-        <Route path={'/dashboard'} element={<DashboardPage />} />
-        <Route path={'/clock'} element={<ClockPage />} />
-        <Route path={'/settings'} element={<UtilityPage />} />
-        <Route path={'/utility'} element={<UtilityPage />} />
-        <Route path={'/utility/:app'} element={<UtilityPage />} />
-        <Route path={'/app/:app'} element={<AppPage />} />
-        <Route path={'/app'} element={<AppPage />} />
-        <Route path={'*'} element={<DashboardPage />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path={'/'} element={<LandingPage />} />
+      <Route path={'/preferences'} element={<LandingPage />} />
+      <Route path={'/developer'} element={<LandingPage />} />
+      <Route path={'/nowplaying'} element={<NowPlaying />} />
+      <Route path={'/dashboard'} element={<DashboardPage />} />
+      <Route path={'/clock'} element={<ClockPage />} />
+      <Route path={'/settings'} element={<UtilityPage />} />
+      <Route path={'/utility'} element={<UtilityPage />} />
+      <Route path={'/utility/:app'} element={<UtilityPage />} />
+      <Route path={'/app/:app'} element={<AppPage />} />
+      <Route path={'/app'} element={<AppPage />} />
+      <Route path={'*'} element={<DashboardPage />} />
+    </Routes>
   )
 }
 

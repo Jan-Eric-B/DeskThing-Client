@@ -26,13 +26,10 @@ export const SettingsBooleanComponent: React.FC<SettingsBooleanProps> = ({
 }) => {
   return (
     <SettingComponent setting={setting} className={className}>
-      <Button
-        disabled={setting.disabled}
-        onClick={() => handleSettingChange(!setting.value as boolean)}
-      >
+      <Button disabled={setting.disabled} onClick={() => handleSettingChange(!setting.value)}>
         <IconToggle
           iconSize={64}
-          checked={setting.value as boolean}
+          checked={setting.value}
           className={`${setting.value ? 'text-green-500' : 'text-gray-500'} w-full h-full`}
         />
       </Button>

@@ -20,15 +20,15 @@ export class WebSocketManager {
   private statusListeners: StatusListener[] = []
   private reconnecting = false
   private url: string
-  private heartbeatInterval: NodeJS.Timeout | null = null
-  private pongTimeout: NodeJS.Timeout | null = null
+  private heartbeatInterval: ReturnType<typeof setTimeout> | null = null
+  private pongTimeout: ReturnType<typeof setTimeout> | null = null
   private missedPongs = 0
   private readonly MAX_MISSED_PONGS = 3
   private clientId: string | null = null
   private code = Math.random() * 1000000
 
-  private closeTimeoutId: NodeJS.Timeout | null = null
-  private reconnectId: NodeJS.Timeout | null = null
+  private closeTimeoutId: ReturnType<typeof setTimeout> | null = null
+  private reconnectId: ReturnType<typeof setTimeout> | null = null
 
   constructor(clientId: string, url?: string) {
     this.clientId = clientId

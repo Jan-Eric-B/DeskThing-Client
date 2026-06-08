@@ -232,7 +232,7 @@ export const useMusicStore = create<MusicState>((set, get) => ({
     })
   }
 }))
-const debounceTimers: { [key in AUDIO_REQUESTS]?: NodeJS.Timeout } = {}
+const debounceTimers: { [key in AUDIO_REQUESTS]?: ReturnType<typeof setTimeout> } = {}
 
 const createWSAction = async (
   songData: Extract<DeviceToDeskthingData, { app: 'music' }>

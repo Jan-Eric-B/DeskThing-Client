@@ -39,7 +39,7 @@ const Miniplayer: React.FC = () => {
   const [height, setHeight] = useState('h-16')
   const [width, setWidth] = useState('w-16')
   const [expanded, setExpanded] = useState(false)
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
+  const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null)
 
   const [refreshing, setIsRefreshing] = useState(false)
 

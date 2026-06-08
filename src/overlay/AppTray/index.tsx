@@ -22,7 +22,7 @@ const AppTray: React.FC = () => {
   const [tabVisible, setTabVisible] = useState(true)
 
   useEffect(() => {
-    let timer: NodeJS.Timeout
+    let timer: ReturnType<typeof setTimeout>
     if (appTrayState === ViewMode.PEEK) {
       timer = setTimeout(() => {
         setPreferences({ appTrayState: ViewMode.HIDDEN })

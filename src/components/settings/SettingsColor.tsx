@@ -22,7 +22,7 @@ export const SettingsColorComponent: React.FC<SettingsColorProps> = memo(
     const [isChanging, setIsChanging] = useState(false)
 
     useEffect(() => {
-      let timer: NodeJS.Timeout
+      let timer: ReturnType<typeof setTimeout>
       if (isChanging) {
         timer = setTimeout(() => {
           if (localValue !== setting.value) {
@@ -35,7 +35,7 @@ export const SettingsColorComponent: React.FC<SettingsColorProps> = memo(
     }, [localValue, isChanging, setting.value, handleSettingChange])
 
     useEffect(() => {
-      let promptTimer: NodeJS.Timeout
+      let promptTimer: ReturnType<typeof setTimeout>
       if (showPrompt) {
         promptTimer = setTimeout(() => {
           setShowPrompt(false)
@@ -63,13 +63,14 @@ export const SettingsColorComponent: React.FC<SettingsColorProps> = memo(
               onClick={() => setShowPrompt(true)}
             />
             {showPrompt && (
-              <div
+              <button
+                type="button"
                 onClick={() => setShowPrompt(false)}
                 className="fixed top-4 left-4 z-50 flex items-center rounded-lg bg-green-500 px-4 py-2 text-sm text-white"
               >
                 <div className="h-2 w-2 rounded-full bg-white" />
-                <p className="ml-2">Click the Scroll Wheel or Enter to close</p>
-              </div>
+                <span className="ml-2">Click the Scroll Wheel or Enter to close</span>
+              </button>
             )}
           </div>
         </div>

@@ -57,7 +57,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
     useEffect(() => {
       // Checking if the song is done
       let isValid = true
-      let timeoutId: NodeJS.Timeout | undefined = undefined
+      let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
       if (totalLength <= progress && !isDragging) {
         setTotalLength(30000)
         setCurrentProgress(0)

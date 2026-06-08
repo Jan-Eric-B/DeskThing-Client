@@ -32,12 +32,12 @@ export const SettingsNumberComponent: React.FC<SettingsNumberProps> = ({
   }
 
   const handleIncrement = () => {
-    const newValue = clampValue((setting.value as number) + 1, setting.min, setting.max)
+    const newValue = clampValue(setting.value + 1, setting.min, setting.max)
     handleSettingChange(newValue)
   }
 
   const handleDecrement = () => {
-    const newValue = clampValue((setting.value as number) - 1, setting.min, setting.max)
+    const newValue = clampValue(setting.value - 1, setting.min, setting.max)
     handleSettingChange(newValue)
   }
 
@@ -52,7 +52,7 @@ export const SettingsNumberComponent: React.FC<SettingsNumberProps> = ({
             <input
               disabled={setting.disabled}
               type="number"
-              value={setting.value as number}
+              value={setting.value}
               min={setting.min}
               max={setting.max}
               onChange={(e) => {
