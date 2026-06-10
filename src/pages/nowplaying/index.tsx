@@ -17,6 +17,7 @@ export default function NowPlaying() {
   const song = useMusicStore((state) => state.song)
   const refresh = useMusicStore((state) => state.requestMusicData)
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const showAlbumArt = useSettingsStore((state) => state.preferences.showAlbumArt ?? true)
   const textLight = useSettingsStore((state) => state.preferences.theme.textLight)
   const textDark = useSettingsStore((state) => state.preferences.theme.textDark)
   const [customSize, setCustomSize] = useState({ width: 300, height: 300 })
@@ -99,9 +100,20 @@ export default function NowPlaying() {
   return (
     <div
       style={{ background: song?.color?.rgb }}
-      className="w-screen h-full max-h-full flex-shrink bg-black flex-col flex items-center justify-center"
+      className="relative overflow-hidden w-screen h-full max-h-full flex-shrink bg-black flex-col flex items-center justify-center"
     >
-      <div className="w-full col-span-2 h-full flex items-center justify-center">
+      {showAlbumArt && song?.thumbnail && (
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url(${song.thumbnail})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'blur(25px)'
+          }}
+        />
+      )}
+      <div className="relative w-full col-span-2 h-full flex items-center justify-center">
         <div
           className="relative flex-shrink-0"
           style={{
@@ -128,7 +140,7 @@ export default function NowPlaying() {
                   src={song?.thumbnail || ''}
                   alt=""
                   style={{
-                    display: song?.thumbnail ? 'block' : 'none',
+                    display: showAlbumArt && song?.thumbnail ? 'block' : 'none',
                     pointerEvents: 'none',
                     userSelect: 'none'
                   }}

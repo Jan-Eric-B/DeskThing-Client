@@ -74,6 +74,19 @@ export const ConfigComponent: React.FC<ConfigComponentProps> = ({ onFinish }) =>
             <SettingsBooleanComponent
               handleSettingChange={(value) =>
                 updatePreferences({
+                  showAlbumArt: value
+                })
+              }
+              setting={{
+                value: preferences.showAlbumArt ?? true,
+                type: SETTING_TYPES.BOOLEAN,
+                label: 'Show Album Art',
+                description: 'Use album artwork as the Clock background and Now Playing cover'
+              }}
+            />
+            <SettingsBooleanComponent
+              handleSettingChange={(value) =>
+                updatePreferences({
                   use24hour: value
                 })
               }

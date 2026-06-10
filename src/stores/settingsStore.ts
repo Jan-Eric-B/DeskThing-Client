@@ -13,14 +13,19 @@ import {
   VolMode
 } from '@deskthing/types'
 import useWebSocketStore from './websocketStore'
+
+export type ClientPreferences = ClientConfigurations & {
+  showAlbumArt?: boolean
+}
+
 export interface SettingsState {
   logs: Log[]
   manifest: ClientManifest
-  preferences: ClientConfigurations
+  preferences: ClientPreferences
   addLog: (log: Log) => void
   clearLogs: () => void
   updateManifest: (settings: Partial<ClientManifest>) => void
-  updatePreferences: (preferences: Partial<ClientConfigurations>) => void
+  updatePreferences: (preferences: Partial<ClientPreferences>) => void
   updateCurrentView: (view: App) => void
   updateTheme: (preferences: Partial<Theme>) => void
   resetPreferences: () => void
@@ -48,7 +53,7 @@ const defaultManifest: ClientManifest = {
   repository: ''
 }
 
-const defaultPreferences: ClientConfigurations = {
+const defaultPreferences: ClientPreferences = {
   profileId: 'unset',
   version: '0.11.0',
   miniplayer: {
@@ -88,7 +93,8 @@ const defaultPreferences: ClientConfigurations = {
     version: '0',
     type: 'clock'
   },
-  use24hour: false
+  use24hour: false,
+  showAlbumArt: true
 }
 
 /**
