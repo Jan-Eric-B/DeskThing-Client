@@ -88,6 +88,12 @@ export const useMappingStore = create<MappingState>((set, get) => ({
     const manifest = useSettingsStore.getState().manifest
     const profile = get().profile
     const { ip, port } = manifest.context
+    // Bundled client icons must be resolved relative to the Vite base, not the
+    // web root. On-device the client is served from a subdirectory
+    // (/usr/share/qt-superbird-app/webapp/) with base './', so a root-absolute
+    // '/icons/...' escapes the webapp dir and 404s, leaving ActionIcon to fall
+    // back to the gear logo. BASE_URL is '/' in dev and './' in the build.
+    const base = import.meta.env.BASE_URL
     if (action.source === 'server') {
       if (action.id === 'pref') {
         const apps = useAppStore.getState().apps
@@ -97,14 +103,14 @@ export const useMappingStore = create<MappingState>((set, get) => ({
           return url
         } else {
           const actionIcon = profile?.actions.find((a) => a.id === action.id).icon || action.id
-          return `/icons/${actionIcon}.svg`
+          return `${base}icons/${actionIcon}.svg`
         }
       }
       if (action.id === 'open') {
         const keywords = ['utility', 'settings', 'dashboard', 'nowplaying']
         if (keywords.includes(action.value)) {
           const actionIcon = profile?.actions.find((a) => a.id === action.id).icon || action.id
-          return `/icons/${actionIcon}.svg`
+          return `${base}icons/${actionIcon}.svg`
         } else {
           const url = `http://${ip}:${port}/icons/${action.value}/icons/${action.value}.svg?url`
           return url
@@ -112,7 +118,7 @@ export const useMappingStore = create<MappingState>((set, get) => ({
       }
 
       const actionIcon = profile?.actions.find((a) => a.id === action.id).icon || action.id
-      return `/icons/${actionIcon}.svg`
+      return `${base}icons/${actionIcon}.svg`
     } else {
       // Fetch from server
       const actionIcon = profile?.actions.find((a) => a.id === action.id).icon || action.id

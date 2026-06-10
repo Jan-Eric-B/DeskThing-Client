@@ -32,10 +32,17 @@ const ActionIcon: React.FC<ActionProps> = ({ url, className }) => {
             Accept: 'image/svg+xml'
           }
         })
-        if (rawSvg.ok) {
-          const contentType = rawSvg.headers.get('content-type')
-          if (contentType?.includes('svg')) {
-            const text = await rawSvg.text()
+        // On-device the client is loaded over file:// (Chromium --app=file://),
+        // and successful file:// fetches report status 0 / ok === false even
+        // though the body is valid. Accept status 0 so bundled icons load on the
+        // Car Thing; http(s) responses still use the normal ok check.
+        if (rawSvg.ok || rawSvg.status === 0) {
+          const text = await rawSvg.text()
+          // Validate by body, not the content-type header: file:// (and some
+          // on-device servers) return no or a generic content-type, so a header
+          // check would reject a valid SVG. The '<svg' check still guards
+          // against non-SVG responses such as a 404 HTML page.
+          if (text.includes('<svg')) {
             setSvgContent(text)
           } else {
             setSvgContent(null)
