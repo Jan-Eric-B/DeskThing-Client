@@ -8,7 +8,6 @@ export default {
       },
       fontFamily: {
         geist: ['Geist', 'sans-serif'],
-        Wingding: ['Wingding', 'monospace'],
         geistMono: ['GeistMono', 'monospace'],
         THEBOLDFONT: ['THEBOLDFONT', 'sans-serif']
       },

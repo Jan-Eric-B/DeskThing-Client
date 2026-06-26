@@ -31,14 +31,6 @@ button:active {
 }
 
 @font-face {
-  font-family: 'WingDing';
-  src: url(/fonts/wingding.ttf) format('truetype');
-  font-style: normal;
-  font-weight: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'THEBOLDFONT';
   src: url(/fonts/THEBOLDFONT.ttf) format('truetype');
   font-style: normal;
