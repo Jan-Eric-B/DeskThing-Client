@@ -80,10 +80,10 @@ const ErrorScreen: React.FC<ErrorScreenProps> = ({ message }) => {
 
   return (
     <div className="bg-zinc-800 w-screen h-screen flex justify-center items-center">
-      <div className="text-white font-geist">
+      <div className="text-white font-hanken">
         <h1 className="text-4xl text-red-300">Oops! Something went wrong.</h1>
-        <p className="font-geistMono">{message}</p>
-        <p className="font-geistMono italic text-gray-500">Location: {pathname}</p>
+        <p className="font-robotoMono">{message}</p>
+        <p className="font-robotoMono italic text-gray-500">Location: {pathname}</p>
         <div className="w-full flex justify-center pt-5">
           <button
             onClick={clearCache}

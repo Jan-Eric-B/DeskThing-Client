@@ -15,26 +15,18 @@ button:active {
 
 
 @font-face {
-  font-family: 'Geist';
-  src: url(/fonts/GeistVF.ttf) format('truetype');
+  font-family: 'Hanken Grotesk';
+  src: url(/fonts/HankenGroteskVF.ttf) format('truetype');
   font-style: normal;
-  font-weight: normal;
+  font-weight: 100 900;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'GeistMono';
-  src: url(/fonts/GeistMonoVF.ttf) format('truetype');
+  font-family: 'Roboto Mono';
+  src: url(/fonts/RobotoMonoVF.ttf) format('truetype');
   font-style: normal;
-  font-weight: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'THEBOLDFONT';
-  src: url(/fonts/THEBOLDFONT.ttf) format('truetype');
-  font-style: normal;
-  font-weight: normal;
+  font-weight: 100 700;
   font-display: swap;
 }
 
@@ -75,7 +67,7 @@ button:active {
 #root {
   position: fixed;
   color: white;
-  font-family: 'Geist', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   max-height: var(--vh);
 }
 

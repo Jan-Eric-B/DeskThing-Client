@@ -16,7 +16,7 @@ const SettingComponent = ({ setting, children, className }: SettingComponentProp
       className={`py-3 shrink-0 flex items-center hover:bg-zinc-950/50 justify-between w-full border-t relative border-gray-900 ${className}`}
     >
       <div className="w-full flex-1">
-        <div className="text-gray-500 font-geistMono absolute -top-2 inset flex justify-between w-full">
+        <div className="text-gray-500 font-robotoMono absolute -top-2 inset flex justify-between w-full">
           <p>{setting.type?.toUpperCase() || 'Legacy Setting'}</p>
           {setting.type === 'number' && (
             <p>

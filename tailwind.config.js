@@ -7,9 +7,8 @@ export default {
         xs: '400px'
       },
       fontFamily: {
-        geist: ['Geist', 'sans-serif'],
-        geistMono: ['GeistMono', 'monospace'],
-        THEBOLDFONT: ['THEBOLDFONT', 'sans-serif']
+        hanken: ['Hanken Grotesk', 'sans-serif'],
+        robotoMono: ['Roboto Mono', 'monospace']
       },
       keyframes: {
         float: {
