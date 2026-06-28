@@ -1,4 +1,5 @@
 import { IconAlbum, IconLogoGearLoading } from '@src/assets/Icons'
+import BlurredBackground from '@src/components/BlurredBackground'
 import { useSettingsStore } from '@src/stores'
 import { useMusicStore } from '@src/stores/musicStore'
 
@@ -31,17 +32,7 @@ export default function NowPlaying() {
       style={{ background: song?.color?.rgb }}
       className="relative overflow-hidden w-screen h-full max-h-full flex-shrink bg-black flex-col flex items-center justify-center"
     >
-      {showAlbumArt && song?.thumbnail && (
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url(${song.thumbnail})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'blur(25px)'
-          }}
-        />
-      )}
+      <BlurredBackground />
       <div className="relative w-full h-full flex items-center justify-start px-12">
         <div className="relative flex-shrink-0 h-[300px] w-[300px]">
           <button

@@ -1,3 +1,4 @@
+import BlurredBackground from '@src/components/BlurredBackground'
 import { TimeUpdater } from '@src/components/TimeUpdater'
 import { useMusicStore, useSettingsStore } from '@src/stores'
 import { useTimeStore } from '@src/stores/timeStore'
@@ -26,17 +27,7 @@ const ClockPage: FC = () => {
   return (
     <div className="relative w-full flex items-center justify-center h-full">
       <TimeUpdater />
-      {showAlbumArt && musicData && (
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url(${musicData.thumbnail})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'blur(25px)'
-          }}
-        />
-      )}
+      <BlurredBackground />
       <div className="absolute w-full h-full inset-0 flex items-center justify-center">
         <p
           style={{
