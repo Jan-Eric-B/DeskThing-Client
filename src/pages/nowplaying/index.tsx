@@ -50,15 +50,15 @@ export default function NowPlaying() {
             className="relative h-full w-full flex-shrink-0 cursor-pointer"
           >
             {isRefreshing ? (
-              <IconLogoGearLoading className="select-none absolute animate-fade top-0 left-0 w-full h-full object-cover rounded-lg border shadow-lg" />
+              <IconLogoGearLoading className="select-none absolute animate-fade top-0 left-0 w-full h-full object-cover" />
             ) : (
               <>
                 <IconAlbum
-                  className="select-none w-full h-full absolute animate-fade top-0 left-0 object-cover rounded-lg border shadow-lg"
+                  className="select-none w-full h-full absolute animate-fade top-0 left-0 object-cover rounded-2xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)]"
                   style={{ pointerEvents: 'none' }}
                 />
                 <img
-                  className="select-none absolute w-full h-full animate-fade top-0 left-0 object-cover rounded-lg border shadow-lg"
+                  className="select-none absolute w-full h-full animate-fade top-0 left-0 object-cover rounded-2xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)]"
                   src={song?.thumbnail || ''}
                   alt=""
                   style={{
@@ -77,13 +77,13 @@ export default function NowPlaying() {
           style={{ color: song?.color?.isLight ? textDark : textLight }}
           className={`ml-10 flex-1 min-w-0 flex flex-col justify-center`}
         >
-          <h1 className={`md:text-2xl lg:text-4xl`}>{song?.album || ''}</h1>
+          <h1 className={`md:text-3xl lg:text-5xl opacity-50`}>{song?.album || ''}</h1>
           <p
-            className={`text-xl sm:text-3xl md:text-6xl xl:text-9xl line-clamp-3 overflow-hidden break-words`}
+            className={`text-xl sm:text-3xl md:text-6xl xl:text-9xl line-clamp-3 overflow-hidden break-words font-bold`}
           >
             {song?.track_name || 'Waiting For Track...'}
           </p>
-          <p className={`md:text-2xl lg:text-4xl`}>{song?.artist || ''}</p>
+          <p className={`md:text-3xl lg:text-5xl opacity-70`}>{song?.artist || ''}</p>
         </div>
       </div>
     </div>
