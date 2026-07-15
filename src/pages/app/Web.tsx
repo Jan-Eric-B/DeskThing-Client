@@ -48,7 +48,11 @@ const WebPage: React.FC<WebPageProps> = ({ currentView }: WebPageProps): JSX.Ele
   const executeAction = useMappingStore((state) => state.executeAction)
   const executeKey = useMappingStore((state) => state.executeKey)
   const currentTime = useTimeStore((state) => state.currentTimeFormatted)
+  const meridiem = useTimeStore((state) => state.meridiem)
   const manifest = useSettingsStore((state) => state.manifest)
+
+  // Apps expect the full "3:45 PM" string, so re-attach the meridiem the store now keeps separate
+  const timePayload = meridiem ? `${currentTime} ${meridiem}` : currentTime
 
   // Handles triggering actions
   const handleAction = (data: AppTriggerAction) => {
@@ -199,10 +203,10 @@ const WebPage: React.FC<WebPageProps> = ({ currentView }: WebPageProps): JSX.Ele
   }, [appSettings, currentView])
 
   useEffect(() => {
-    if (currentTime) {
-      send({ type: DEVICE_CLIENT.TIME, app: 'client', request: 'set', payload: currentTime })
+    if (timePayload) {
+      send({ type: DEVICE_CLIENT.TIME, app: 'client', request: 'set', payload: timePayload })
     }
-  }, [currentTime])
+  }, [timePayload])
 
   useEffect(() => {
     const sendDefaultData = async () => {
@@ -214,8 +218,8 @@ const WebPage: React.FC<WebPageProps> = ({ currentView }: WebPageProps): JSX.Ele
           payload: appSettings[currentView]
         })
       }
-      currentTime &&
-        send({ type: DEVICE_CLIENT.TIME, app: 'client', request: 'set', payload: currentTime })
+      timePayload &&
+        send({ type: DEVICE_CLIENT.TIME, app: 'client', request: 'set', payload: timePayload })
     }
 
     const id = setTimeout(sendDefaultData, 1000)

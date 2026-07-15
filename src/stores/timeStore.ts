@@ -15,6 +15,8 @@ import { useSettingsStore } from './settingsStore'
 interface TimeStore {
   currentTimeFormatted: string
   utcTime: number // Server's UTC time in ms
+  meridiem: string // AM or PM or "" for 24-hour format
+  currentDateFormatted: string // Current date formatted as a string
   timezoneOffset: number // Server's timezone offset in minutes
   serverTimeOffset: number // Offset between server time and client time in ms
   syncTime: (utcTime: number, timezoneOffset: number) => void // Sync with server time
@@ -23,6 +25,8 @@ interface TimeStore {
 
 export const useTimeStore = create<TimeStore>((set, get) => ({
   currentTimeFormatted: '',
+  meridiem: '',
+  currentDateFormatted: '',
   utcTime: 0,
   timezoneOffset: 0,
   serverTimeOffset: 0,
@@ -45,19 +49,23 @@ export const useTimeStore = create<TimeStore>((set, get) => ({
   // Update formatted current time based on server's offset
   updateCurrentTime: () => {
     const { serverTimeOffset, timezoneOffset } = get()
-    const currentTime = new Date(Date.now() + serverTimeOffset) // Adjust for server offset
     const is24Hour = useSettingsStore.getState().preferences.use24hour
-    // Convert to server timezone
-    const adjustedTime = new Date(currentTime.getTime() + timezoneOffset * 60000)
 
-    // Format the time based on server time
-    const [hours, minutes] = [adjustedTime.getUTCHours(), adjustedTime.getUTCMinutes()]
-    const meridiem = hours >= 12 ? 'PM' : 'AM'
-    const formattedHours = is24Hour ? hours : hours % 12 || 12
-    const formattedMinutes = minutes.toString().padStart(2, '0')
-    const suffix = is24Hour ? '' : ` ${meridiem}`
-    const formattedTime = `${formattedHours}:${formattedMinutes}${suffix}`
+    const adjustedTime = new Date(Date.now() + serverTimeOffset + timezoneOffset * 60000)
+    const hours = adjustedTime.getUTCHours()
+    const minutes = adjustedTime.getUTCMinutes()
 
-    set({ currentTimeFormatted: formattedTime })
+    set({
+      currentTimeFormatted: `${is24Hour ? hours : hours % 12 || 12}:${minutes
+        .toString()
+        .padStart(2, '0')}`,
+      meridiem: is24Hour ? '' : hours >= 12 ? 'PM' : 'AM',
+      currentDateFormatted: adjustedTime.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        timeZone: 'UTC'
+      })
+    })
   }
 }))

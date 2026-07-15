@@ -14,6 +14,7 @@ import { FC, useEffect } from 'react'
 const ClockPage: FC = () => {
   const musicData = useMusicStore((state) => state.song)
   const time = useTimeStore((state) => state.currentTimeFormatted)
+  const meridiem = useTimeStore((state) => state.meridiem)
   const syncTime = useTimeStore((state) => state.updateCurrentTime)
   const showAlbumArt = useSettingsStore((state) => state.preferences.showAlbumArt ?? true)
   const use24hour = useSettingsStore((state) => state.preferences.use24hour)
@@ -36,6 +37,7 @@ const ClockPage: FC = () => {
           className="text-9xl"
         >
           {time}
+          {meridiem && <span className="ml-3 align-top text-5xl opacity-60">{meridiem}</span>}
         </p>
       </div>
     </div>
