@@ -6,6 +6,10 @@ import { useEffect, useState } from 'react'
 interface ActionProps {
   url: string
   className?: string
+  /**
+   * Overrides the theme icon colour to follow the album-art-adaptive text colour;
+   */
+  color?: string
 }
 
 /**
@@ -16,10 +20,11 @@ interface ActionProps {
  * @param {string} [props.className] - An optional CSS class name to be applied to the component.
  * @returns {JSX.Element} - The rendered action icon component.
  */
-const ActionIcon: React.FC<ActionProps> = ({ url, className }) => {
+const ActionIcon: React.FC<ActionProps> = ({ url, className, color }) => {
   const getActionUrl = useMappingStore((store) => store.getActionUrl)
   const [svgContent, setSvgContent] = useState<string | null>(null)
-  const iconColor = useSettingsStore((store) => store.preferences.theme.icons)
+  const themeIconColor = useSettingsStore((store) => store.preferences.theme.icons)
+  const iconColor = color ?? themeIconColor
 
   useEffect(() => {
     const abortController = new AbortController()
