@@ -29,8 +29,14 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
     const [isDragging, setIsDragging] = useState(false)
     const [prevId, setPrevId] = useState('')
 
+    // A source can keep reporting `is_playing` with a placeholder duration while
+    // no track is actually loaded (ours reports ~9.5s), which made the bar sweep
+    // 0 -> 100% on a ~10s loop forever and fire an extra song request on every
+    // wrap. With no track there is nothing to track: freeze the bar at empty.
+    const hasTrack = Boolean(songData?.track_name)
+
     useEffect(() => {
-      if (!songData) return
+      if (!songData || !hasTrack) return
 
       setPrevId(songData.id)
 
@@ -52,10 +58,12 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
           return () => clearInterval(timer)
         }
       }
-    }, [songData, totalLength, isDragging])
+    }, [songData, hasTrack, totalLength, isDragging])
 
     useEffect(() => {
       // Checking if the song is done
+      if (!hasTrack) return
+
       let isValid = true
       let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
       if (totalLength <= progress && !isDragging) {
@@ -75,12 +83,13 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
         isValid = false
         clearTimeout(timeoutId)
       }
-    }, [progress, totalLength, isDragging])
+    }, [progress, totalLength, isDragging, hasTrack])
 
     const handleMouseDown = (
       e: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>
     ) => {
       if (miniplayerState.state == 'hidden') return
+      if (!hasTrack) return
       if (e.cancelable) {
         e.preventDefault()
       }
@@ -90,6 +99,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
 
     const handleMouseUp = () => {
       if (miniplayerState.state == 'hidden') return
+      if (!hasTrack) return
       Logger.info('mouse up ' + progress)
       if (totalLength <= progress) {
         next()
@@ -115,6 +125,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
 
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (miniplayerState.state == 'hidden') return
+      if (!hasTrack) return
       if (isDragging) {
         const rect = e.currentTarget.getBoundingClientRect()
         const x = e.clientX - rect.left
@@ -126,6 +137,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
 
     const handleTouchMove = (e: React.TouchEvent<HTMLButtonElement>) => {
       if (miniplayerState.state == 'hidden') return
+      if (!hasTrack) return
       if (isDragging) {
         const rect = e.currentTarget.getBoundingClientRect()
         const touch = e.touches[0]
@@ -145,7 +157,7 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
             visible: miniplayerState.visible ?? true
           }
         })
-      } else {
+      } else if (hasTrack) {
         const rect = e.currentTarget.getBoundingClientRect()
         const x = e.clientX - rect.left
         const percentage = x / rect.width
@@ -168,7 +180,10 @@ const ProgressBar: React.FC<ProgressBarProps> = memo(
       >
         <div className="w-full absolute h-5 -top-5"></div>
         <div
-          style={{ width: `${(progress / totalLength) * 100}%`, backgroundColor: primary }}
+          style={{
+            width: hasTrack && totalLength > 0 ? `${(progress / totalLength) * 100}%` : '0%',
+            backgroundColor: primary
+          }}
           className="h-full w-full bottom-0 bg-gray-200"
         ></div>
       </button>
