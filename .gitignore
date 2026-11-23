@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Packaged client zips from `npm run build:client`
+deskthing-client-*.zip
+
 # Dedicated browser profile for `npm run dev:device` (persists 800x480 emulation)
 .browser-profile
 
@@ -19,6 +22,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+.vs
 .DS_Store
 *.suo
 *.ntvs*
