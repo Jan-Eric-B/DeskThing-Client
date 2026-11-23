@@ -1,5 +1,6 @@
 import { IconAlbum, IconLogoGearLoading } from '@src/assets/Icons'
 import BlurredBackground from '@src/components/BlurredBackground'
+import IdleScreen from './IdleScreen'
 import { useSettingsStore } from '@src/stores'
 import { useMusicStore } from '@src/stores/musicStore'
 
@@ -27,13 +28,21 @@ export default function NowPlaying() {
     setTimeout(() => setIsRefreshing(false), Math.random() * 1000 + 1000)
   }
 
+  // No track loaded (nothing started yet, or the source isn't set up): show the
+  // idle clock instead of an empty album placeholder with clipped text.
+  const hasTrack = Boolean(song?.track_name)
+
   return (
     <div
       style={{ background: song?.color?.rgb }}
       className="relative overflow-hidden w-screen h-full max-h-full flex-shrink bg-black flex-col flex items-center justify-center"
     >
       <BlurredBackground />
-      <div className="relative w-full h-full flex items-center justify-start px-12">
+      {!hasTrack && <IdleScreen />}
+      <div
+        className="relative w-full h-full flex items-center justify-start px-12"
+        style={{ display: hasTrack ? undefined : 'none' }}
+      >
         <div className="relative flex-shrink-0 h-[300px] w-[300px]">
           <button
             disabled={isRefreshing}
@@ -72,7 +81,7 @@ export default function NowPlaying() {
           <p
             className={`text-xl sm:text-3xl md:text-6xl xl:text-9xl line-clamp-3 overflow-hidden break-words font-bold`}
           >
-            {song?.track_name || 'Waiting For Track...'}
+            {song?.track_name}
           </p>
           <p className={`md:text-3xl lg:text-5xl opacity-70`}>{song?.artist || ''}</p>
         </div>
