@@ -23,6 +23,25 @@ interface TimeStore {
   updateCurrentTime: () => void // Update formatted current time
 }
 
+// The CarThing's Chromium 69 is built without full ICU, so toLocaleDateString
+// ignores the options object and returns "Wed Sep 23 2026". Format by hand so the
+// device matches the desktop client.
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
+
 export const useTimeStore = create<TimeStore>((set, get) => ({
   currentTimeFormatted: '',
   meridiem: '',
@@ -60,12 +79,9 @@ export const useTimeStore = create<TimeStore>((set, get) => ({
         .toString()
         .padStart(2, '0')}`,
       meridiem: is24Hour ? '' : hours >= 12 ? 'PM' : 'AM',
-      currentDateFormatted: adjustedTime.toLocaleDateString('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        timeZone: 'UTC'
-      })
+      currentDateFormatted: `${WEEKDAYS[adjustedTime.getUTCDay()]}, ${
+        MONTHS[adjustedTime.getUTCMonth()]
+      } ${adjustedTime.getUTCDate()}`
     })
   }
 }))
