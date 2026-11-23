@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import WelcomePage from './WelcomeScreen'
 import ConnectingPage from './ConnectingScreen'
-import ConfigPage from './ConfigScreen'
 import { IconArrowLeft, IconArrowRight } from '@src/assets/Icons'
 import { useSettingsStore } from '@src/stores'
 
@@ -24,10 +23,6 @@ const steps: Step[] = [
   {
     id: 2,
     component: ConnectingPage
-  },
-  {
-    id: 3,
-    component: ConfigPage
   }
 ]
 
@@ -39,7 +34,9 @@ const steps: Step[] = [
  * The `LandingPage` component renders the following steps:
  * 1. `WelcomePage`
  * 2. `ConnectingPage`
- * 3. `ConfigPage`
+ *
+ * Configuration is no longer part of onboarding — finishing drops the user on the
+ * Dashboard, and all preferences live in the Settings page.
  *
  * The component handles the navigation between these steps, including the ability to go back to the previous step.
  * It also manages the visibility of the "Next" buttons and the transition animation between steps.
@@ -118,16 +115,14 @@ const LandingPage: React.FC = () => {
         <IconArrowLeft iconSize={64} />
         <p>Previous</p>
       </button>
-      {currentStep !== steps.length - 1 && (
-        <button
-          disabled={currentStep == steps.length - 1 || !showNextSteps}
-          onClick={() => handleNextStep()}
-          className={`bottom-4 right-4 fixed flex items-center disabled:opacity-0 transition-opacity`}
-        >
-          <p>Next</p>
-          <IconArrowRight iconSize={64} />
-        </button>
-      )}
+      <button
+        disabled={!showNextSteps}
+        onClick={() => handleNextStep()}
+        className={`bottom-4 right-4 fixed flex items-center disabled:opacity-0 transition-opacity`}
+      >
+        <p>{currentStep === steps.length - 1 ? 'Finish' : 'Next'}</p>
+        <IconArrowRight iconSize={64} />
+      </button>
     </div>
   )
 }

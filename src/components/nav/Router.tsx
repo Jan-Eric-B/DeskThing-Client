@@ -4,7 +4,7 @@ import LandingPage from '../../pages/landing'
 import React, { useEffect } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import NowPlaying from '@src/pages/nowplaying'
-import UtilityPage from '@src/pages/settings'
+import SettingsPage from '@src/pages/settings'
 import DashboardPage from '@src/pages/dashboard'
 import ClockPage from '@src/pages/clock'
 import Logger from '@src/utils/Logger'
@@ -20,6 +20,7 @@ const SystemApps = new Set([
   'landing',
   'preferences',
   'settings',
+  'config',
   'utility',
   'dashboard',
   'clock'
@@ -61,9 +62,11 @@ const NavRouter: React.FC = () => {
       <Route path={'/nowplaying'} element={<NowPlaying />} />
       <Route path={'/dashboard'} element={<DashboardPage />} />
       <Route path={'/clock'} element={<ClockPage />} />
-      <Route path={'/settings'} element={<UtilityPage />} />
-      <Route path={'/utility'} element={<UtilityPage />} />
-      <Route path={'/utility/:app'} element={<UtilityPage />} />
+      <Route path={'/settings'} element={<SettingsPage />} />
+      {/* Legacy aliases — kept so a persisted currentView of "config"/"utility" still resolves */}
+      <Route path={'/config'} element={<SettingsPage />} />
+      <Route path={'/utility'} element={<SettingsPage />} />
+      <Route path={'/utility/:app'} element={<SettingsPage />} />
       <Route path={'/app/:app'} element={<AppPage />} />
       <Route path={'/app'} element={<AppPage />} />
       <Route path={'*'} element={<DashboardPage />} />
