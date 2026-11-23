@@ -32,7 +32,6 @@ const AppTray: React.FC = () => {
   }, [appTrayState, setPreferences])
 
   useEffect(() => {
-    console.log('Changing the state')
     setTabVisible(true)
     const timer = setTimeout(() => {
       setTabVisible(false)
@@ -76,12 +75,6 @@ const AppTray: React.FC = () => {
     })
     setPreferences({ appTrayState: ViewMode.PEEK })
   }
-
-  useEffect(() => {
-    setTimeout(() => {
-      setPreferences({ appTrayState: ViewMode.PEEK })
-    }, 200)
-  }, [currentView])
 
   const getTrayHeight = () => {
     if (appTrayState === ViewMode.PEEK) return 'h-36'
